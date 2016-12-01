@@ -1,0 +1,643 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>mysql数据插入优化 | Baojf&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Baojf">
+    
+
+    
+    <meta name="description" content="缘起之前项目，有个任务需要将每天的批量任务运算结果插入到mysql数据库中，以备后续查询，运算结果条数大概在100w左右，如果一条条插入，需要几十分钟，竟然和产生数据的批量任务运行时间相当。经过优化之后，插入性能差不多有10倍的提升。在这里记录一下调研调优的整个过程，权当自我总结。^_^
+mysql数据插入方法
+调用Statement相关方法，有单个调用和批量处理两种
+调用PreparedStat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql数据插入优化">
+<meta property="og:url" content="http://niaokedaoren.github.io/blog/2015/07/21/mysql数据插入优化/index.html">
+<meta property="og:site_name" content="Baojf's blog">
+<meta property="og:description" content="缘起之前项目，有个任务需要将每天的批量任务运算结果插入到mysql数据库中，以备后续查询，运算结果条数大概在100w左右，如果一条条插入，需要几十分钟，竟然和产生数据的批量任务运行时间相当。经过优化之后，插入性能差不多有10倍的提升。在这里记录一下调研调优的整个过程，权当自我总结。^_^
+mysql数据插入方法
+调用Statement相关方法，有单个调用和批量处理两种
+调用PreparedStat">
+<meta property="og:updated_time" content="2016-12-01T15:26:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql数据插入优化">
+<meta name="twitter:description" content="缘起之前项目，有个任务需要将每天的批量任务运算结果插入到mysql数据库中，以备后续查询，运算结果条数大概在100w左右，如果一条条插入，需要几十分钟，竟然和产生数据的批量任务运行时间相当。经过优化之后，插入性能差不多有10倍的提升。在这里记录一下调研调优的整个过程，权当自我总结。^_^
+mysql数据插入方法
+调用Statement相关方法，有单个调用和批量处理两种
+调用PreparedStat">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Baojf&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/logo.png" alt="Baojf&#39;s blog" title="Baojf&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="Baojf&#39;s blog">Baojf&#39;s blog</a></h1>
+				<h2 class="blog-motto">thinking along with programming</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/blog/">Home</a></li>
+					
+						<li><a href="/blog/archives">Archives</a></li>
+					
+						<li><a href="/blog/about">About</a></li>
+					
+						<li><a href="/blog/categories">Categories</a></li>
+					
+						<li><a href="/blog/tags">Tags</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:niaokedaoren.github.io/blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2015/07/21/mysql数据插入优化/" title="mysql数据插入优化" itemprop="url">mysql数据插入优化</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2015-07-21T13:59:38.000Z" itemprop="datePublished"> 发表于 2015-07-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#缘起"><span class="toc-number">1.</span> <span class="toc-text">缘起</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql数据插入方法"><span class="toc-number">2.</span> <span class="toc-text">mysql数据插入方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Database-Connection"><span class="toc-number">2.1.</span> <span class="toc-text">Database Connection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Statement"><span class="toc-number">2.2.</span> <span class="toc-text">Statement</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#StatementBatch"><span class="toc-number">2.3.</span> <span class="toc-text">StatementBatch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PreparedStatement"><span class="toc-number">2.4.</span> <span class="toc-text">PreparedStatement</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PreparedStatementBatch"><span class="toc-number">2.5.</span> <span class="toc-text">PreparedStatementBatch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Load"><span class="toc-number">2.6.</span> <span class="toc-text">Load</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rewriteBatchedStatements"><span class="toc-number">2.7.</span> <span class="toc-text">rewriteBatchedStatements</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>之前项目，有个任务需要将每天的批量任务运算结果插入到mysql数据库中，以备后续查询，运算结果条数大概在100w左右，如果一条条插入，需要几十分钟，竟然和产生数据的批量任务运行时间相当。经过优化之后，插入性能差不多有10倍的提升。在这里记录一下调研调优的整个过程，权当自我总结。^_^</p>
+<h3 id="mysql数据插入方法"><a href="#mysql数据插入方法" class="headerlink" title="mysql数据插入方法"></a>mysql数据插入方法</h3><ul>
+<li>调用Statement相关方法，有单个调用和批量处理两种</li>
+<li>调用PreparedStatement相关方法，同样有两种方式</li>
+<li>load方法，很好很强大</li>
+</ul>
+<p>下面一一介绍这些方法，并随带样例代码加以说明。</p>
+<h4 id="Database-Connection"><a href="#Database-Connection" class="headerlink" title="Database Connection"></a>Database Connection</h4><p>为了方便说明，只是简单做了一下包装。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DbConnectionManager</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> DbConfiguration dbConfiguration = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        dbConfiguration = DbConfiguration.instance();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Class.forName(dbConfiguration.getDriver());</div><div class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;   </div><div class="line">    &#125;   </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</div><div class="line">        String url = dbConfiguration.getUrl();</div><div class="line">        String username = dbConfiguration.getUsername();</div><div class="line">        String password = dbConfiguration.getPassword();</div><div class="line">        Connection connection = <span class="keyword">null</span>;</div><div class="line">        connection = DriverManager.getConnection(url, username, password);</div><div class="line">        connection.setAutoCommit(<span class="keyword">false</span>);  <span class="comment">// 为了提高批量插入的性能</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> connection;</div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="Statement"><a href="#Statement" class="headerlink" title="Statement"></a>Statement</h4><p>调用Statement相关方法，单个插入。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">runInsertViaStatement</span><span class="params">(List&lt;DataUnit&gt; data)</span> </span>&#123;</div><div class="line">    <span class="keyword">long</span> costTime = <span class="number">0</span>;</div><div class="line">    Connection connection = <span class="keyword">null</span>;</div><div class="line">    Statement statement = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        connection = DbConnectionManager.getConnection();</div><div class="line">        statement = connection.createStatement();</div><div class="line">        <span class="keyword">long</span> begin = System.currentTimeMillis();</div><div class="line">        <span class="keyword">for</span> (DataUnit record : data) &#123;</div><div class="line">            String sql = String.format(<span class="string">"insert ignore into term_uv values ('%s', '%s', %s, %s)"</span>,</div><div class="line">                    record.term, record.dt, record.uv, record.platform);</div><div class="line">            statement.execute(sql);</div><div class="line">        &#125;   </div><div class="line">        connection.commit();</div><div class="line">        costTime += (System.currentTimeMillis() - begin);</div><div class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            statement.close();</div><div class="line">            connection.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;   </div><div class="line">    &#125;   </div><div class="line"></div><div class="line">    <span class="keyword">return</span> costTime;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="StatementBatch"><a href="#StatementBatch" class="headerlink" title="StatementBatch"></a>StatementBatch</h4><p>批量插入数据，每1000条数据执行一次executeBatch。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">statement = connection.createStatement();</div><div class="line"><span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line"><span class="keyword">for</span> (DataUnit record : data) &#123;</div><div class="line">    count += <span class="number">1</span>;</div><div class="line">    String sql = String.format(<span class="string">"insert ignore into term_uv values('%s', '%s', %s, %s)"</span>,</div><div class="line">            record.term, record.dt, record.uv, record.platform);</div><div class="line">    statement.addBatch(sql);</div><div class="line">    <span class="keyword">if</span> (count % <span class="number">1000</span> == <span class="number">0</span>) &#123;</div><div class="line">        statement.executeBatch();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">statement.executeBatch();</div></pre></td></tr></table></figure></p>
+<h4 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h4><p>这种方式也是一条条插入，但是不用重复为每条sql解析语法，所以相对于Statement方法，会快一些，但是在实验中，并没有差多少，可能是sql太过简单。用PreparedStatement也有缺点，就是一个statement只能为一条sql语句服务。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">String sql = <span class="string">"insert ignore into term_uv (term, dt, uv, platform) values (?, ?, ?, ?)"</span>;</div><div class="line">statement = connection.prepareStatement(sql);</div><div class="line"><span class="keyword">for</span> (DataUnit record : data) &#123;</div><div class="line">    statement.setString(<span class="number">1</span>, record.term);</div><div class="line">    statement.setString(<span class="number">2</span>, record.dt);</div><div class="line">    statement.setString(<span class="number">3</span>, record.uv);</div><div class="line">    statement.setString(<span class="number">4</span>, record.platform);</div><div class="line">    statement.executeUpdate();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="PreparedStatementBatch"><a href="#PreparedStatementBatch" class="headerlink" title="PreparedStatementBatch"></a>PreparedStatementBatch</h4><p>这个就是上面几种方法的终极组合。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">String sql = <span class="string">"insert ignore into term_uv (term, dt, uv, platform) values (?, ?, ?, ?)"</span>;</div><div class="line">statement = connection.prepareStatement(sql);</div><div class="line"><span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line"><span class="keyword">for</span> (DataUnit record : data) &#123;</div><div class="line">    count += <span class="number">1</span>;</div><div class="line">    statement.setString(<span class="number">1</span>, record.term);</div><div class="line">    statement.setString(<span class="number">2</span>, record.dt);</div><div class="line">    statement.setString(<span class="number">3</span>, record.uv);</div><div class="line">    statement.setString(<span class="number">4</span>, record.platform);</div><div class="line">    statement.addBatch();</div><div class="line">    <span class="keyword">if</span> (count % <span class="number">1000</span> == <span class="number">0</span>) &#123;</div><div class="line">        statement.executeBatch();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">statement.executeBatch();</div></pre></td></tr></table></figure></p>
+<h4 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h4><p>直接通过文件方式load到mysql中，这应该是最快的方式，实验结果也是如此。但是缺点就是要把数据写到文件中，然后load到mysql中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">statement = connection.createStatement();</div><div class="line">String sql = String.format(<span class="string">"load data local infile '%s' replace into table term_uv"</span>, filename);</div><div class="line">statement.executeUpdate(sql);</div></pre></td></tr></table></figure></p>
+<p>###实验结果</p>
+<table>
+<thead>
+<tr>
+<th>数据量</th>
+<th>Statement</th>
+<th>PreparedStatement</th>
+<th>StatementBatch</th>
+<th>PreparedStatementBatch</th>
+<th>Load</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1w</td>
+<td>273231 ms</td>
+<td>273045 ms</td>
+<td>274518 ms</td>
+<td>273063 ms</td>
+<td>1002 ms</td>
+</tr>
+</tbody>
+</table>
+<p>除了load，其它方法基本差不多，当时也没有多调查，就直接采用load。</p>
+<h4 id="rewriteBatchedStatements"><a href="#rewriteBatchedStatements" class="headerlink" title="rewriteBatchedStatements"></a>rewriteBatchedStatements</h4><p>做完项目之后，google了一把，才发现原来默认情况下，jdbc对批量执行还是一条条处理。要开启批量模式，需要在建立connection的url参数中设置rewriteBatchedStatements为true。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jdbc:mysql://&lt;host&gt;:&lt;port&gt;/&lt;db&gt;?rewriteBatchedStatements=<span class="literal">true</span></div></pre></td></tr></table></figure></p>
+<p>新的实验结果如下：</p>
+<table>
+<thead>
+<tr>
+<th>数据量</th>
+<th>Statement</th>
+<th>PreparedStatement</th>
+<th>StatementBatch</th>
+<th>PreparedStatementBatch</th>
+<th>Load</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1w</td>
+<td>273231 ms</td>
+<td>273045 ms</td>
+<td>2555 ms</td>
+<td>1181 ms</td>
+<td>1002 ms</td>
+</tr>
+<tr>
+<td>10w</td>
+<td>–</td>
+<td>–</td>
+<td>18361 ms</td>
+<td>7850 ms</td>
+<td>6812 ms</td>
+</tr>
+</tbody>
+</table>
+<p>P.S. 对于term字段中包含单引号的需要转义<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">term.replace(<span class="string">"'"</span>, <span class="string">"''"</span>);</div></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/database/">database</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/mysql/">mysql</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://niaokedaoren.github.io/blog/blog/2015/07/21/mysql数据插入优化/" data-title="mysql数据插入优化 | Baojf&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2015/08/30/TIJ-读书笔记-复用类/" title="TIJ 读书笔记 -- 复用类">
+  <strong>上一篇：</strong><br/>
+  <span>
+  TIJ 读书笔记 -- 复用类</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2015/07/14/hexo-github-搭建blog/"  title="hexo + github 搭建blog">
+ <strong>下一篇：</strong><br/> 
+ <span>hexo + github 搭建blog
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/07/21/mysql数据插入优化/" data-title="mysql数据插入优化" data-url="http://niaokedaoren.github.io/blog/blog/2015/07/21/mysql数据插入优化/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#缘起"><span class="toc-number">1.</span> <span class="toc-text">缘起</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql数据插入方法"><span class="toc-number">2.</span> <span class="toc-text">mysql数据插入方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Database-Connection"><span class="toc-number">2.1.</span> <span class="toc-text">Database Connection</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Statement"><span class="toc-number">2.2.</span> <span class="toc-text">Statement</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#StatementBatch"><span class="toc-number">2.3.</span> <span class="toc-text">StatementBatch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PreparedStatement"><span class="toc-number">2.4.</span> <span class="toc-text">PreparedStatement</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PreparedStatementBatch"><span class="toc-number">2.5.</span> <span class="toc-text">PreparedStatementBatch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Load"><span class="toc-number">2.6.</span> <span class="toc-text">Load</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rewriteBatchedStatements"><span class="toc-number">2.7.</span> <span class="toc-text">rewriteBatchedStatements</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/blog/categories/database/" title="database">database<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/java/" title="java">java<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/tools/" title="tools">tools<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/blog/tags/blog/" title="blog">blog<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Comparable/" title="Comparable">Comparable<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/多态/" title="多态">多态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/继承/" title="继承">继承<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/组合/" title="组合">组合<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/final/" title="final">final<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/类加载/" title="类加载">类加载<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/容器/" title="容器">容器<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Collections/" title="Collections">Collections<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/sort/" title="sort">sort<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/protobuf/" title="protobuf">protobuf<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Comparator/" title="Comparator">Comparator<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/接口/" title="接口">接口<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/策略模式/" title="策略模式">策略模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/适配模式/" title="适配模式">适配模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/io/" title="io">io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/github/" title="github">github<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/base64/" title="base64">base64<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<section class="info">
+		<p> It&#39;s a wonderful world. <br/>
+			Just enjoy life.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/blog/about" target="_blank" title="Baojf">Baojf</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.0.3.min.js"></script>
+<script src="/blog/js/jquery.imagesloaded.min.js"></script>
+<script src="/blog/js/gallery.js"></script>
+<script src="/blog/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"baojf"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?faf6858afbda07bb3e46473949e1e6fb";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/blog/img/scrollup.png"/></a>
+	</div>
+	<script src="/blog/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

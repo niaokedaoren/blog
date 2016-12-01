@@ -1,0 +1,575 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>TIJ 读书笔记 -- 多态 | Baojf&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Baojf">
+    
+
+    
+    <meta name="description" content="多态是TIJ的第八章，记录一些琐碎的语言细节和陷阱，平时更喜欢用interface的形式来实现多态，那样感觉会更顺眼，纯属个人喜好，O(∩_∩)O哈哈~
+一个简单例子123456789101112131415161718192021222324252627282930313233343536package thinking.in.java.polymorphism;import static th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TIJ 读书笔记 -- 多态">
+<meta property="og:url" content="http://niaokedaoren.github.io/blog/2015/09/01/TIJ-读书笔记-多态/index.html">
+<meta property="og:site_name" content="Baojf's blog">
+<meta property="og:description" content="多态是TIJ的第八章，记录一些琐碎的语言细节和陷阱，平时更喜欢用interface的形式来实现多态，那样感觉会更顺眼，纯属个人喜好，O(∩_∩)O哈哈~
+一个简单例子123456789101112131415161718192021222324252627282930313233343536package thinking.in.java.polymorphism;import static th">
+<meta property="og:updated_time" content="2016-12-01T15:26:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TIJ 读书笔记 -- 多态">
+<meta name="twitter:description" content="多态是TIJ的第八章，记录一些琐碎的语言细节和陷阱，平时更喜欢用interface的形式来实现多态，那样感觉会更顺眼，纯属个人喜好，O(∩_∩)O哈哈~
+一个简单例子123456789101112131415161718192021222324252627282930313233343536package thinking.in.java.polymorphism;import static th">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Baojf&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/logo.png" alt="Baojf&#39;s blog" title="Baojf&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="Baojf&#39;s blog">Baojf&#39;s blog</a></h1>
+				<h2 class="blog-motto">thinking along with programming</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/blog/">Home</a></li>
+					
+						<li><a href="/blog/archives">Archives</a></li>
+					
+						<li><a href="/blog/about">About</a></li>
+					
+						<li><a href="/blog/categories">Categories</a></li>
+					
+						<li><a href="/blog/tags">Tags</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:niaokedaoren.github.io/blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2015/09/01/TIJ-读书笔记-多态/" title="TIJ 读书笔记 -- 多态" itemprop="url">TIJ 读书笔记 -- 多态</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-01T14:40:12.000Z" itemprop="datePublished"> 发表于 2015-09-01</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一个简单例子"><span class="toc-number">1.</span> <span class="toc-text">一个简单例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Covariant-Return"><span class="toc-number">2.</span> <span class="toc-text">Covariant Return</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pitfall：构造器中调用动态绑定函数"><span class="toc-number">3.</span> <span class="toc-text">Pitfall：构造器中调用动态绑定函数</span></a></li></ol>
+		
+		</div>
+		
+		<p>多态是TIJ的第八章，记录一些琐碎的语言细节和陷阱，平时更喜欢用interface的形式来实现多态，那样感觉会更顺眼，纯属个人喜好，O(∩_∩)O哈哈~</p>
+<h3 id="一个简单例子"><a href="#一个简单例子" class="headerlink" title="一个简单例子"></a>一个简单例子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> thinking.in.java.polymorphism;</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> thinking.in.java.util.Print.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Cycle</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">echo</span><span class="params">(Cycle cycle)</span> </span>&#123;</div><div class="line">        println(cycle.name() + <span class="string">" has "</span> + cycle.wheels() + <span class="string">" wheels."</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> getClass().getSimpleName();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">wheels</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Cycle.echo(<span class="keyword">new</span> Bicycle());</div><div class="line">        Cycle.echo(<span class="keyword">new</span> Tricycle());</div><div class="line">        <span class="comment">/* output:</span></div><div class="line">         Bicycle has 2 wheels.</div><div class="line">         Tricycle has 3 wheels.</div><div class="line">         */</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bicycle</span> <span class="keyword">extends</span> <span class="title">Cycle</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">wheels</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tricycle</span> <span class="keyword">extends</span> <span class="title">Cycle</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">wheels</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">3</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在java的世界里，父类中除了static和final方法（private方法也是final方法，这个设定是很合理的，因为private方法是无法被继承的），其它方法都可以被子类继承（或者override），这些方法运行时都是需要动态绑定到具体对象类型，相当于c++里的方法加了virtual字段。那么，为什么static、final、private方法不需要做额外的动态绑定开销呢？原因很简单，static方法是属于类的，和具体对象无关，而final和private方法是无法继承覆盖的，其对应的对象类型是固定的。一般，编译器会对final方法进行展开处理，来提高效率，就像c++里的inline函数。不过对于类的方法能不加final，就尽量不加，但是能private的，尽量private。</p>
+<p>现在说说上面这个简单例子，<em>Cycle.echo()</em>方法传入的都是Cycle的子类类型，都可以upcast到Cycle类型，但是具体运行到name()和wheels()方法时候，都进行了动态绑定，执行的是子类的方法。这样做的好处是在加入新的子类，e.g. Unicycle时候，基类Cycle根本不需要做任何改变，执行echo方法，如果传入的是Unicycle的对象，就会动态绑定到新编写的方法。这样就可以做到“对修改关闭，对扩展开放了”。</p>
+<h3 id="Covariant-Return"><a href="#Covariant-Return" class="headerlink" title="Covariant Return"></a>Covariant Return</h3><p>子类在覆盖基类的方法时，方法的签名是必须一致的，但是return的类型不一定要一致，子类返回的是父类返回类型的子类型也是可以的，因为这完全不妨碍upcast。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Grain</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="string">"Grain"</span>; &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Wheat</span> <span class="keyword">extends</span> <span class="title">Grain</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="string">"Wheat"</span>; &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mill</span> </span>&#123;</div><div class="line">    <span class="function">Grain <span class="title">process</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> Grain(); &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WheatMill</span> <span class="keyword">extends</span> <span class="title">Mill</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function">Wheat <span class="title">process</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> Wheat(); &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CovariantReturn</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Mill m = <span class="keyword">new</span> Mill();</div><div class="line">        Grain g = m.process();</div><div class="line">        println(g);</div><div class="line"></div><div class="line">        m = <span class="keyword">new</span> WheatMill();</div><div class="line">        g = m.process();</div><div class="line">        println(g);</div><div class="line">        <span class="comment">/* output: </span></div><div class="line">         Grain</div><div class="line">         Wheat</div><div class="line">         */</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><em>Mill的process()和子类WheatMill的process()就是存在这个差异。</em></p>
+<h3 id="Pitfall：构造器中调用动态绑定函数"><a href="#Pitfall：构造器中调用动态绑定函数" class="headerlink" title="Pitfall：构造器中调用动态绑定函数"></a>Pitfall：构造器中调用动态绑定函数</h3><p>最好还是不要那样做，有可能产生匪夷所思的错误。下面看个TIJ书上的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Glyph</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123; println(<span class="string">"Glyph.draw()"</span>); &#125;</div><div class="line"></div><div class="line">    Glyph() &#123;</div><div class="line">        println(<span class="string">"Glyph() before draw()"</span>);</div><div class="line">        draw();</div><div class="line">        println(<span class="string">"Glyph() after draw()"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RoundGlyph</span> <span class="keyword">extends</span> <span class="title">Glyph</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> radius = <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123; println(<span class="string">"RoundGlyph.draw(), radius = "</span> + radius); &#125;</div><div class="line"></div><div class="line">    RoundGlyph() &#123;</div><div class="line">        println(<span class="string">"RoundGlyph(), radius = "</span> + radius);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PolyConstructors</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">new</span> RoundGlyph();</div><div class="line">        <span class="comment">/* output: </span></div><div class="line">         Glyph() before draw()</div><div class="line">         RoundGlyph.draw(), radius = 0</div><div class="line">         Glyph() after draw()</div><div class="line">         RoundGlyph(), radius = 1</div><div class="line">         */</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在运行<em>new RoundGlyph();</em>这个语句时候，先要调用父类Glyph的构造器，但是Glyph()的draw()方法是动态绑定到RoundGlyph的对象上的，而该对象尚未构造完成，所有的实例域都被初始化为二进制0，所以打印出来的radius是0。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/多态/">多态</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://niaokedaoren.github.io/blog/blog/2015/09/01/TIJ-读书笔记-多态/" data-title="TIJ 读书笔记 -- 多态 | Baojf&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2015/09/07/TIJ-读书笔记-接口/" title="TIJ 读书笔记 -- 接口">
+  <strong>上一篇：</strong><br/>
+  <span>
+  TIJ 读书笔记 -- 接口</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2015/08/30/TIJ-读书笔记-复用类/"  title="TIJ 读书笔记 -- 复用类">
+ <strong>下一篇：</strong><br/> 
+ <span>TIJ 读书笔记 -- 复用类
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/09/01/TIJ-读书笔记-多态/" data-title="TIJ 读书笔记 -- 多态" data-url="http://niaokedaoren.github.io/blog/blog/2015/09/01/TIJ-读书笔记-多态/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一个简单例子"><span class="toc-number">1.</span> <span class="toc-text">一个简单例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Covariant-Return"><span class="toc-number">2.</span> <span class="toc-text">Covariant Return</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pitfall：构造器中调用动态绑定函数"><span class="toc-number">3.</span> <span class="toc-text">Pitfall：构造器中调用动态绑定函数</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/blog/categories/database/" title="database">database<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/java/" title="java">java<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/tools/" title="tools">tools<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/blog/tags/blog/" title="blog">blog<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Comparable/" title="Comparable">Comparable<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/多态/" title="多态">多态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/继承/" title="继承">继承<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/组合/" title="组合">组合<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/final/" title="final">final<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/类加载/" title="类加载">类加载<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/容器/" title="容器">容器<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Collections/" title="Collections">Collections<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/sort/" title="sort">sort<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/protobuf/" title="protobuf">protobuf<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Comparator/" title="Comparator">Comparator<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/接口/" title="接口">接口<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/策略模式/" title="策略模式">策略模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/适配模式/" title="适配模式">适配模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/io/" title="io">io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/github/" title="github">github<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/base64/" title="base64">base64<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<section class="info">
+		<p> It&#39;s a wonderful world. <br/>
+			Just enjoy life.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/blog/about" target="_blank" title="Baojf">Baojf</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.0.3.min.js"></script>
+<script src="/blog/js/jquery.imagesloaded.min.js"></script>
+<script src="/blog/js/gallery.js"></script>
+<script src="/blog/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"baojf"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?faf6858afbda07bb3e46473949e1e6fb";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/blog/img/scrollup.png"/></a>
+	</div>
+	<script src="/blog/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

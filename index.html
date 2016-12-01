@@ -1,0 +1,1338 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Baojf&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Baojf">
+    
+
+    
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Baojf's blog">
+<meta property="og:url" content="http://niaokedaoren.github.io/blog/index.html">
+<meta property="og:site_name" content="Baojf's blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Baojf's blog">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Baojf&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/logo.png" alt="Baojf&#39;s blog" title="Baojf&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="Baojf&#39;s blog">Baojf&#39;s blog</a></h1>
+				<h2 class="blog-motto">thinking along with programming</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/blog/">Home</a></li>
+					
+						<li><a href="/blog/archives">Archives</a></li>
+					
+						<li><a href="/blog/about">About</a></li>
+					
+						<li><a href="/blog/categories">Categories</a></li>
+					
+						<li><a href="/blog/tags">Tags</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:niaokedaoren.github.io/blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2016/12/02/搬到Mac上写博客/" title="搬到Mac上写博客" itemprop="url">搬到Mac上写博客</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2016-12-01T16:11:10.000Z" itemprop="datePublished"> 发表于 2016-12-02</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>今年双十一在老婆的鼓励之下，入手了一个MacBook Air。我觉得苹果电脑好用的精髓就是，从此可以告别鼠标了，不论干啥事，都很舒坦。熟悉了几天之后，就萌生了把之前的hexo博客写作环境搬到Mac上来。于是乎就折腾了一番。</p>
+<h3 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h3><hr>
+<h4 id="一-必备的工具"><a href="#一-必备的工具" class="headerlink" title="一.必备的工具"></a>一.必备的工具</h4><ol>
+<li>node.js下的巨慢无比。</li>
+<li>git：xcode安装好就可以了。</li>
+</ol>
+<h4 id="二-hexo"><a href="#二-hexo" class="headerlink" title="二.hexo"></a>二.hexo</h4><ol>
+<li><p>安装完成hexo之后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ mkdir blog</div><div class="line">$ hexo init blog</div><div class="line">$ cd blog</div><div class="line">$ rm -rf source</div><div class="line">$ git clone git@github.com:niaokedaoren/blog-src.git source</div><div class="line">$ git clone https://github.com/wuchong/jacman.git themes/jacman</div></pre></td></tr></table></figure>
+</li>
+<li><p>拷贝source目录下备份的 _config.yml到相应目录下即可。</p>
+</li>
+<li>修改一下scaffolds的post.md<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">title: &#123;&#123; title &#125;&#125;</div><div class="line">date: &#123;&#123; date &#125;&#125;</div><div class="line">categories:</div><div class="line">tags:</div><div class="line">---</div></pre></td></tr></table></figure></li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/tools/">tools</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/blog/">blog</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2016/12/02/搬到Mac上写博客/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/12/02/搬到Mac上写博客/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2016/05/17/Base64编码简介/" title="Base64编码简介" itemprop="url">Base64编码简介</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2016-05-17T07:14:21.000Z" itemprop="datePublished"> 发表于 2016-05-17</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h4><p>想把protobuf的message按字节数组输出，以前写到hbase里，很自然；但是现在需要写到hdfs上，突然就没法子了。google大法，发现有个base64的东西，问题一下迎刃而解。</p>
+<ol>
+<li>输出字节数组：转成base64 string；</li>
+<li>读取字节数组：从base64 string反解回来。</li>
+</ol>
+<h4 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h4><p>commons-codec，这个包比较好用，一堆thread safe的静态函数，就能搞定问题。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-codec<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-codec<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><ol>
+<li>每3个8位二进制码位一组，转换为4个6位二进制码为一组（不足6位时地位补0）。3个8位二进制码和4个6位二进制码长度都是24位。</li>
+<li>对获得的4个6位二进制码补位，每个6位二进制码添加两位高位0，组成4个8位二进制码。</li>
+<li>将获得的4个8位二进制码转换为4个十进制码。</li>
+<li>将获得的十进制码转换为Base64字符表中对应的字符，<a href="http://aub.iteye.com/blog/1129273" target="_blank" rel="external">对照表</a>。</li>
+</ol>
+<p>另外，当原文的二进制码长度不是24的倍数，最终转换为十进制时也不足4项，这时就需要用=补位。<br>RFC2045还规定每行位76个字符，每行末尾需添加一个回车换行符(\r\n)，即便是最后一行不够76个字符，也要加换行符。</p>
+<h4 id="commons-codec-三种模式"><a href="#commons-codec-三种模式" class="headerlink" title="commons-codec 三种模式"></a>commons-codec 三种模式</h4><ol>
+<li>标准的RFC2045，每76个字符加上(\r\n)，有补位等号，即chunked的模式</li>
+<li>有补位等号，但是不加(\r\n)，即url unsafe模式</li>
+<li>Url Base64,也就是将“+”和“\”换成了“-”和“_”符号，且不适用补位，即url safe模式</li>
+</ol>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Base64Test</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">decode</span><span class="params">(String base64Str)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> String(Base64.decodeBase64(base64Str));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        String text = <span class="string">"hello, Base64!"</span>;</div><div class="line">        String base64Text = Base64.encodeBase64String(text.getBytes());</div><div class="line">        String base64TextChunked = <span class="keyword">new</span> String(Base64.encodeBase64Chunked(text.getBytes()));</div><div class="line">        String base64UrlSafeText = Base64.encodeBase64URLSafeString(text.getBytes());</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"text: "</span> + text.length());</div><div class="line">        System.out.println(<span class="string">"text byte: "</span> + text.getBytes().length);</div><div class="line">        System.out.println(<span class="string">"url-unsafe base64: "</span> + base64Text.length());</div><div class="line">        System.out.println(<span class="string">"chunked base64: "</span> + base64TextChunked.length());</div><div class="line">        System.out.println(<span class="string">"url-safe base64: "</span> + base64UrlSafeText.length());</div><div class="line"></div><div class="line">        System.out.println(base64Text);</div><div class="line">        System.out.println(base64TextChunked);</div><div class="line">        System.out.println(base64UrlSafeText);</div><div class="line"></div><div class="line">        System.out.println(decode(base64Text));</div><div class="line">        System.out.println(decode(base64TextChunked));</div><div class="line">        System.out.println(decode(base64UrlSafeText));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">/* output</span></div><div class="line">text: 14</div><div class="line">text byte: 14</div><div class="line">url-unsafe base64: 20</div><div class="line">chunked base64: 22</div><div class="line">url-safe base64: 19</div><div class="line">aGVsbG8sIEJhc2U2NCE=</div><div class="line">aGVsbG8sIEJhc2U2NCE=</div><div class="line"></div><div class="line">aGVsbG8sIEJhc2U2NCE</div><div class="line">hello, Base64!</div><div class="line">hello, Base64!</div><div class="line">hello, Base64!</div><div class="line"> */</div></pre></td></tr></table></figure>
+<ul>
+<li>分析首三字母 <strong>hel</strong> –&gt; <strong>aGVs</strong><br>二进制表示：<br>h = 01101000<br>e = 01100101<br>l = 01101100</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">c1</th>
+<th style="text-align:center">c2</th>
+<th style="text-align:center">c3</th>
+<th style="text-align:center">c4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">011010</td>
+<td style="text-align:center">000110</td>
+<td style="text-align:center">010101</td>
+<td style="text-align:center">101100</td>
+</tr>
+<tr>
+<td style="text-align:center">26</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">21</td>
+<td style="text-align:center">44</td>
+</tr>
+<tr>
+<td style="text-align:center">a</td>
+<td style="text-align:center">G</td>
+<td style="text-align:center">V</td>
+<td style="text-align:center">s</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>分析末尾两个字母 <strong>4！</strong><br>根据规则，3个原始byte一组转换，最后剩余的byte组成一组，<br>二进制表示：<br>4 = 00110100<br>! = 00100001<br>每6个bit构成base64编码的一个字母，剩余4个bit后面需补充2个0bit，构成第三个字母</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">c1</th>
+<th style="text-align:center">c2</th>
+<th style="text-align:center">c3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">001101</td>
+<td style="text-align:center">000010</td>
+<td style="text-align:center">000100</td>
+</tr>
+<tr>
+<td style="text-align:center">13</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">N</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">E</td>
+</tr>
+</tbody>
+</table>
+<p>因为只有NCE三个字母，所以需要一个部位等号，凑足4个字母，如果按照标准的base64编码，还需要加上 \r\n</p>
+<h4 id="结合protobuf的应用"><a href="#结合protobuf的应用" class="headerlink" title="结合protobuf的应用"></a>结合protobuf的应用</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">(Text key, Iterable&lt;Text&gt; values, Context context)</span> <span class="keyword">throws</span> IOException, InterruptedException </span>&#123;</div><div class="line">    UserModel.Builder builder = UserModel.newBuilder();</div><div class="line">    <span class="keyword">for</span> (Text entry : values) &#123;</div><div class="line">        <span class="keyword">byte</span>[] pbUserModel = Base64.decodeBase64(entry.toString());</div><div class="line">        builder.mergeFrom(pbUserModel);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    UserModel model = builder.build();</div><div class="line">    String base64Str = Base64.encodeBase64URLSafeString(model.toByteArray());</div><div class="line"></div><div class="line">    context.write(key, <span class="keyword">new</span> Text(base64Str));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="利弊"><a href="#利弊" class="headerlink" title="利弊"></a>利弊</h4><h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><ol>
+<li>7 Bit ASCII characters are safe for transmission over the network and between different systems</li>
+<li>SMPT protocol for emails supports only 7 Bit ASCII Characters. Base64 is the commonly used technique to send binary files as attachments in emails.</li>
+</ol>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><ol>
+<li>Base64 encoding bloats the size of the original binary stream by 33 percent</li>
+<li>Encoding/Decoding process consumes resources and can cause performance problems</li>
+</ol>
+<p>reference:</p>
+<ol>
+<li><a href="https://commons.apache.org/proper/commons-codec/apidocs/org/apache/commons/codec/binary/Base64.html" target="_blank" rel="external">https://commons.apache.org/proper/commons-codec/apidocs/org/apache/commons/codec/binary/Base64.html</a></li>
+<li><a href="http://aub.iteye.com/blog/1129273" target="_blank" rel="external">http://aub.iteye.com/blog/1129273</a></li>
+<li><a href="http://dev-faqs.blogspot.hk/2012/12/advantages-of-base-64-encoding.html" target="_blank" rel="external">http://dev-faqs.blogspot.hk/2012/12/advantages-of-base-64-encoding.html</a></li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/base64/">base64</a><a href="/blog/tags/protobuf/">protobuf</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2016/05/17/Base64编码简介/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/05/17/Base64编码简介/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2016/02/28/TIJ读书笔记-IO/" title="TIJ读书笔记--IO" itemprop="url">TIJ读书笔记--IO</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-28T02:34:08.000Z" itemprop="datePublished"> 发表于 2016-02-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>时间飞逝，转眼就是2016，由于2015下半年事情太多，就把读书这事给松懈了，现在捡起来继续。</p>
+<p>平时用java io主要是读写文件，网络传输方面基本不涉及。用java io API给我的最大感受就是读写一下文件，为啥要new那么多类，一层包一层，好混乱。这几天，读了java编程思想的文件IO这一章，稍微弄明白其内在逻辑，写篇博文总结总结。本文相关类依赖图都出自<a href="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/" target="_blank" rel="external">深入分析 Java I/O 的工作机制</a></p>
+<h3 id="基于字节流的API-InputStream-和-OutputStream"><a href="#基于字节流的API-InputStream-和-OutputStream" class="headerlink" title="基于字节流的API: InputStream 和 OutputStream"></a>基于字节流的API: InputStream 和 OutputStream</h3><p>java io的<a href="https://docs.oracle.com/javase/7/docs/api/java/io/package-summary.html" target="_blank" rel="external">API</a>是不断演进的，最开始只有支持byte流读写的API，其基类就是InputStream和OutputStream。简单看一下各个类的关系。<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image002.png" alt="InputStream"><br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image004.png" alt="OutputStream"></p>
+<p>都是基于字节的，和字符编码没有关系:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int read(byte[] b, int off, int len)</div><div class="line">void write(byte[] b, int off, int len</div></pre></td></tr></table></figure></p>
+<p>输入输出的类关系图，很相似，就以OutputStream为例说道说道，直接子类有ByteArrayOutputStream，FileOutputStream，FilterOutputStream，ObjectOutputStream，PipedOutputStream，其中FilterOutputStream类比较特殊，这是一个装饰类，其构造函数是FilterOutputStream(OutputStream out)，这是个典型的装饰模式，所以我们在使用相关API的时候，需要Stream对象一层层包起来，达到一个组合的效果，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new BufferedInputStream(new FileInputStream(filename))。</div></pre></td></tr></table></figure></p>
+<p>下面举个文件copy的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">copy</span><span class="params">(String from, String to)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">    FileInputStream in = <span class="keyword">null</span>;</div><div class="line">    FileOutputStream out = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        in = <span class="keyword">new</span> FileInputStream(from);</div><div class="line">        out = <span class="keyword">new</span> FileOutputStream(to);</div><div class="line">        <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">        <span class="keyword">int</span> n = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> ((n = in.read(buf)) &gt; <span class="number">0</span>) &#123;</div><div class="line">            out.write(buf, <span class="number">0</span>, n);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        <span class="keyword">if</span> (in != <span class="keyword">null</span>) &#123;</div><div class="line">            in.close();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (out != <span class="keyword">null</span>) &#123;</div><div class="line">            out.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="基于字符的API：Reader-和-Writer"><a href="#基于字符的API：Reader-和-Writer" class="headerlink" title="基于字符的API：Reader 和 Writer"></a>基于字符的API：Reader 和 Writer</h3><p>可能是为了国际化，java后来推出了基于字符char的API：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int read(char[] cbuf, int off, int len)</div><div class="line">void write(char[] cbuf, int off, int len)</div></pre></td></tr></table></figure></p>
+<p>Reader、Writer的子类关系图和OutputStream、InputStream很相似，都基于装饰模式。<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image008.png" alt="Reader"><br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image006.png" alt="Writer"></p>
+<h3 id="适配器API：InputStreamReader-和-OutputStreamWriter"><a href="#适配器API：InputStreamReader-和-OutputStreamWriter" class="headerlink" title="适配器API：InputStreamReader 和 OutputStreamWriter"></a>适配器API：InputStreamReader 和 OutputStreamWriter</h3><p>从基于byte的InputStream转到基于字符char的Reader，需要适配器InputStreamReader，如果字节编码格式不是系统默认的，还需要指定编码格式，例如UTF-8等，否则读入乱码，特别是中文。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">InputStreamReader(InputStream in, String charsetName)</div></pre></td></tr></table></figure></p>
+<p>同样OutputStreamWriter，也充当着类似的角色。适配器模式和装饰模式类似，调用相关API，也需要一层层包起来，例如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">new BufferedReader(new InputStreamReader(new FileInputStream(filename), &quot;UTF-8&quot;))</div></pre></td></tr></table></figure></p>
+<p>下面举个读取文件直接print的例子<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">(String filename)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">    FileInputStream in = <span class="keyword">null</span>;</div><div class="line">    BufferedReader bufReader = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        in = <span class="keyword">new</span> FileInputStream(filename);</div><div class="line">        bufReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in, <span class="string">"UTF-8"</span>));</div><div class="line">        String line = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">while</span> ((line = bufReader.readLine()) != <span class="keyword">null</span>) &#123;</div><div class="line">            System.out.println(line);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        <span class="keyword">if</span> (in != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (bufReader != <span class="keyword">null</span>) &#123;</div><div class="line">                bufReader.close();</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                in.close();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/io/">io</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2016/02/28/TIJ读书笔记-IO/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/02/28/TIJ读书笔记-IO/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2015/09/28/TIJ-读书笔记-持有对象/" title="TIJ 读书笔记 -- 持有对象" itemprop="url">TIJ 读书笔记 -- 持有对象</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-28T14:58:47.000Z" itemprop="datePublished"> 发表于 2015-09-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p><img src="http://7xkcol.com1.z0.glb.clouddn.com/java/tij/holding/collections_uml.png" alt="Collections UML"><br>这一章主要讲java容器类，以及相关类的一些基本用法，看完之后对这些java容器之间关系有了一定的把握。总的来说，java容器分为两大类：</p>
+<ul>
+<li>Collection<br>该接口定义了线性容器，List、Set、Queue都是继承自它。</li>
+<li>Map<br>该接口定义了key-value对的容器。</li>
+</ul>
+<p>同时Collections类里面定义了一堆静态函数，提供辅助功能，方便用户操作容器类，例如sort、二分查找、shuffle等功能。</p>
+<p>Java容器类最大的特点就是接口定义和具体实现是解耦的，这个很方便第三方提供其它的优化实现，来替代java sdk中的实现，例如著名的guava库。</p>
+<p>看书，除了温故，当然还有知新。我不喜欢泛泛总结，下面还是举些例子。</p>
+<h3 id="Comparable-vs-Comparator"><a href="#Comparable-vs-Comparator" class="headerlink" title="Comparable vs Comparator"></a>Comparable vs Comparator</h3><p>以前也看过，但是老是映像不深，总觉的差不多，因为两个都是接口。现在谈谈本次看书的体会：</p>
+<ul>
+<li>Comparable<br>需要实现compareTo方法，这个接口像是一个特质（用scala里的trait解释，会更好），一个类实现了这个接口，就说明这个类的对象具有可比性这个特质，这样在调用Collections的sort方法时，就不需要额外提供其它的比较器。</li>
+<li>Comparator<br>需要实现compare方法，这个接口更像是一种策略模式，它是独立于需要比较的类；不同的实现可以给同一个类提供不同的比较策略，使用起来会更加灵活。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">User</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> id;</div><div class="line">    <span class="keyword">final</span> String name;</div><div class="line">    </div><div class="line">    User(<span class="keyword">int</span> id, String name) &#123;</div><div class="line">        <span class="keyword">this</span>.id = id;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(User o)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.id - o.id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"("</span> + id + <span class="string">", "</span> + name + <span class="string">")"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在有User类，实现了Comparable接口，所以具有User类对象之间具有可比性，现在的实现是按照id来排序的。</p>
+<p>测试代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComparableVsComparator</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;User&gt; <span class="title">generateTestData</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;User&gt; users = <span class="keyword">new</span> ArrayList&lt;User&gt;();</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="number">2</span>, <span class="string">"Jack"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">"Tom"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="number">3</span>, <span class="string">"Lucy"</span>));</div><div class="line">        <span class="keyword">return</span> users;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testComparable</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;User&gt; users = ComparableVsComparator.generateTestData();</div><div class="line">        Collections.sort(users);</div><div class="line">        System.out.println(users);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Test comparable: "</span>);</div><div class="line">        ComparableVsComparator.testComparable();</div><div class="line">    &#125;</div><div class="line"><span class="comment">/* Output</span></div><div class="line"> Test comparable: </div><div class="line"> [(1, Tom), (2, Jack), (3, Lucy)]</div><div class="line"> */</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出结果是按照user id来升序排列的，一切都显得很顺利，但是突然有需求，需要对user name进行字母序排序，这下Comparator可以拿出来一展身手了，原来的代码完全不用修改,只需要另外提供一个字母序比较的Comparator实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserComparatorViaName</span> <span class="keyword">implements</span> <span class="title">Comparator</span>&lt;<span class="title">User</span>&gt; </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(User o1, User o2)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> o1.name.compareTo(o2.name);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>测试代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testComparator</span><span class="params">()</span> </span>&#123;</div><div class="line">    List&lt;User&gt; users = ComparableVsComparator.generateTestData();</div><div class="line">    Collections.sort(users, <span class="keyword">new</span> UserComparatorViaName());</div><div class="line">    System.out.println(users);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"Test comparator: "</span>);</div><div class="line">    ComparableVsComparator.testComparator();</div><div class="line">&#125;</div><div class="line"><span class="comment">/* Output</span></div><div class="line"> Test comparator: </div><div class="line"> [(2, Jack), (3, Lucy), (1, Tom)]</div><div class="line"> */</div></pre></td></tr></table></figure></p>
+<h3 id="Queue-and-Stack"><a href="#Queue-and-Stack" class="headerlink" title="Queue and Stack"></a>Queue and Stack</h3><p>因为List下的ArrayList、LinkedList，以及Set下的HashSet、Map下的HashMap平时都比较用的多，就不举例子了。下面就着重介绍一下Queue和Stack，官方API推荐使用双端队列接口<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Deque.html" target="_blank" rel="external">Deque</a>的一种实现<a href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayDeque.html" target="_blank" rel="external">ArrayDeque</a>来模拟Queue和Stack的行为，官方文档中说ArrayDeque要比LinkedList速度要快，但同样是线程不安全的。</p>
+<blockquote>
+<p>Resizable-array implementation of the Deque interface. Array deques have no capacity restrictions; they grow as necessary to support usage. They are not thread-safe; in the absence of external synchronization, they do not support concurrent access by multiple threads. Null elements are prohibited. This class is likely to be faster than Stack when used as a stack, and faster than LinkedList when used as a queue.</p>
+</blockquote>
+<ul>
+<li><p>Queue</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testQueue</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    Deque&lt;String&gt; queue = <span class="keyword">new</span> ArrayDeque&lt;String&gt;();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++) &#123;</div><div class="line">        queue.addLast(generator.next()); <span class="comment">// push</span></div><div class="line">    &#125;</div><div class="line">    System.out.println(<span class="string">"Queue: "</span> + queue);</div><div class="line">    System.out.print(<span class="string">"Pop order:"</span>);</div><div class="line">    <span class="keyword">while</span> (queue.isEmpty() == <span class="keyword">false</span>) &#123;</div><div class="line">        String head = queue.removeFirst(); <span class="comment">// pop</span></div><div class="line">        System.out.print(<span class="string">" "</span> + head);</div><div class="line">    &#125;</div><div class="line">    System.out.println();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Stack</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testStack</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    Deque&lt;String&gt; stack = <span class="keyword">new</span> ArrayDeque&lt;String&gt;();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++) &#123;</div><div class="line">        stack.addFirst(generator.next()); <span class="comment">// push</span></div><div class="line">    &#125;</div><div class="line">    System.out.println(<span class="string">"Stack: "</span> + stack);</div><div class="line">    System.out.print(<span class="string">"Pop order:"</span>);</div><div class="line">    <span class="keyword">while</span> (stack.isEmpty() == <span class="keyword">false</span>) &#123;</div><div class="line">        String head = stack.removeFirst(); <span class="comment">// pop</span></div><div class="line">        System.out.print(<span class="string">" "</span> + head);</div><div class="line">    &#125;</div><div class="line">    System.out.println();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/容器/">容器</a><a href="/blog/tags/Collections/">Collections</a><a href="/blog/tags/sort/">sort</a><a href="/blog/tags/Comparable/">Comparable</a><a href="/blog/tags/Comparator/">Comparator</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2015/09/28/TIJ-读书笔记-持有对象/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/09/28/TIJ-读书笔记-持有对象/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2015/09/07/TIJ-读书笔记-接口/" title="TIJ 读书笔记 -- 接口" itemprop="url">TIJ 读书笔记 -- 接口</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-07T14:27:36.000Z" itemprop="datePublished"> 发表于 2015-09-07</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="一个例子"><a href="#一个例子" class="headerlink" title="一个例子"></a>一个例子</h3><p>接口很好很强大，如果泛泛而谈，我感觉很虚，不实在，那么就从这个小例子谈谈自己的理解吧。在机器学习算法里面，有些会涉及各种类型的距离计算，例如计算与给定点a距离最近的点b，我们可以用欧氏距离，也可以使用马氏距离，或者是向量cos角度值等等。</p>
+<p>很容易发现，计算最近点的算法流程是基本不变的，而变化的部分是距离计算方式，那么我们可以把距离计算方式独立出来，作为一个接口。这个接口可以被实现成不同计算形式，从而做到灵活扩展，但是算法流程部分代码是不需要变更的。这样从某种程度上就做到了“对修改关闭，对扩展开放。”这一经典的做法，就是大名鼎鼎的策略模式。</p>
+<h4 id="初体验"><a href="#初体验" class="headerlink" title="初体验"></a>初体验</h4><p>下面看看具体代码(已省去逻辑细节)：</p>
+<ul>
+<li><p>最近邻算法流程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OneNearestNeighbour</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> List&lt;DataPoint&gt; dataset;</div><div class="line">    <span class="keyword">private</span> DistanceCalculator distanceCalculator;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OneNearestNeighbour</span><span class="params">(List&lt;DataPoint&gt; dataset, DistanceCalculator calculator)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.dataset = dataset;</div><div class="line">        distanceCalculator = calculator;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> DataPoint <span class="title">getNearestNeighbour</span><span class="params">(DataPoint a)</span> </span>&#123;</div><div class="line">        DataPoint result = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">double</span> min = Double.MAX_VALUE;</div><div class="line">        <span class="keyword">for</span> (DataPoint b : dataset) &#123;</div><div class="line">            <span class="keyword">double</span> distance = distanceCalculator.distance(a, b);</div><div class="line">            <span class="keyword">if</span> (distance &lt; min) &#123;</div><div class="line">                result = b;</div><div class="line">                min = distance;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>距离计算接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">DistanceCalculator</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">distance</span><span class="params">(DataPoint a, DataPoint b)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>计算欧氏距离</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EuclideanDistance</span> <span class="keyword">implements</span> <span class="title">DistanceCalculator</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">distance</span><span class="params">(DataPoint a, DataPoint b)</span> </span>&#123;</div><div class="line">        <span class="keyword">double</span> result = <span class="number">0</span>;</div><div class="line">        <span class="comment">// ...</span></div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这样就可以用欧氏距离计算最近邻了。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    <span class="comment">// ... </span></div><div class="line">    DistanceCalculator calculator = <span class="keyword">new</span> EuclideanDistance();</div><div class="line">    OneNearestNeighbour oneNN = <span class="keyword">new</span> OneNearestNeighbour(dataset, calculator);</div><div class="line">    oneNN.getNearestNeighbour(point);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="进一步"><a href="#进一步" class="headerlink" title="进一步"></a>进一步</h4><p>现在我们厌倦了欧氏距离，想试试马氏距离的效果，所需做的就是用马氏距离实现接口<em>DistanceCalculator</em>，算法流程无需变更。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MahalanobisDistance</span> <span class="keyword">implements</span> <span class="title">DistanceCalculator</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">distance</span><span class="params">(DataPoint a, DataPoint b)</span> </span>&#123;</div><div class="line">        <span class="keyword">double</span> result = <span class="number">0</span>;</div><div class="line">        <span class="comment">// ...</span></div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="comment">// ...</span></div><div class="line">        DistanceCalculator calculator = <span class="keyword">new</span> MahalanobisDistance();</div><div class="line">        OneNearestNeighbour oneNN = <span class="keyword">new</span> OneNearestNeighbour(dataset, calculator);</div><div class="line">        oneNN.getNearestNeighbour(point);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="再进一步"><a href="#再进一步" class="headerlink" title="再进一步"></a>再进一步</h4><p>有些时候，我们无需从零开始实现接口<em>DistanceCalculator</em>，像上面的两个距离计算方式。例如，我们现在已经有两个点相似度的计算类<em>PointsSimilarity</em>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PointsSimilarity</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">double</span> <span class="title">similarity</span><span class="params">(DataPoint a, DataPoint b)</span> </span>&#123;</div><div class="line">        <span class="keyword">double</span> result = <span class="number">0</span>;</div><div class="line">        <span class="comment">// ...</span></div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>把<em>PointsSimilarity</em>类借助适配模式，包装成接口<em>DistanceCalculator</em>的实现，就可以巧妙的融入到最近邻算法当中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PointsSimilarityAdapter</span> <span class="keyword">implements</span> <span class="title">DistanceCalculator</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> PointsSimilarity pointsSimilarity;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PointsSimilarityAdapter</span><span class="params">(PointsSimilarity pointsSimilarity)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.pointsSimilarity = pointsSimilarity;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">distance</span><span class="params">(DataPoint a, DataPoint b)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + pointsSimilarity.similarity(a, b));</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h4><p>其实在上面这个例子中，接口<em>DistanceCalculator</em>完全可以用一个抽象类来代替，可以达到一模一样的效果。但是如果类<em>PointsSimilarity</em>在适配的时候，需要继承另一个类，那样用抽象类就没法适配了。</p>
+<p>接口和抽象类都可以做到不能被直接实例化，通过抽象方法来规范子类的行为，相当于所有子类都会遵守这个“契约”，所以子类可以向上泛化成父类，对调用者隐藏具体的实现。而接口与抽象类相比，最大的优势就是可以多重继承。另外，使用接口就意味着大家都要准守契约，可以做到具体实现和接口调用的解耦，可以很方便些测试用例，mock一下接口，各个模块就可以独立测试，著名的mvc模式就是这么搞的。</p>
+<p>TIJ的作者在本章的最后给出了一个忠告：</p>
+<blockquote>
+<p>恰当的原则应该是优先使用类而不是接口。从类开始，如果接口的必需性变得非常明确，那么就进行重构。接口是一种工具，但是它容易被滥用。</p>
+</blockquote>
+<p>这句话我理解不深，在以后的工作学习中，多琢磨，多尝试。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/接口/">接口</a><a href="/blog/tags/策略模式/">策略模式</a><a href="/blog/tags/适配模式/">适配模式</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2015/09/07/TIJ-读书笔记-接口/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/09/07/TIJ-读书笔记-接口/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2015/09/01/TIJ-读书笔记-多态/" title="TIJ 读书笔记 -- 多态" itemprop="url">TIJ 读书笔记 -- 多态</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-01T14:40:12.000Z" itemprop="datePublished"> 发表于 2015-09-01</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>多态是TIJ的第八章，记录一些琐碎的语言细节和陷阱，平时更喜欢用interface的形式来实现多态，那样感觉会更顺眼，纯属个人喜好，O(∩_∩)O哈哈~</p>
+<h3 id="一个简单例子"><a href="#一个简单例子" class="headerlink" title="一个简单例子"></a>一个简单例子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> thinking.in.java.polymorphism;</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> thinking.in.java.util.Print.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Cycle</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">echo</span><span class="params">(Cycle cycle)</span> </span>&#123;</div><div class="line">        println(cycle.name() + <span class="string">" has "</span> + cycle.wheels() + <span class="string">" wheels."</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> getClass().getSimpleName();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">wheels</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Cycle.echo(<span class="keyword">new</span> Bicycle());</div><div class="line">        Cycle.echo(<span class="keyword">new</span> Tricycle());</div><div class="line">        <span class="comment">/* output:</span></div><div class="line">         Bicycle has 2 wheels.</div><div class="line">         Tricycle has 3 wheels.</div><div class="line">         */</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bicycle</span> <span class="keyword">extends</span> <span class="title">Cycle</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">wheels</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tricycle</span> <span class="keyword">extends</span> <span class="title">Cycle</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">wheels</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">3</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在java的世界里，父类中除了static和final方法（private方法也是final方法，这个设定是很合理的，因为private方法是无法被继承的），其它方法都可以被子类继承（或者override），这些方法运行时都是需要动态绑定到具体对象类型，相当于c++里的方法加了virtual字段。那么，为什么static、final、private方法不需要做额外的动态绑定开销呢？原因很简单，static方法是属于类的，和具体对象无关，而final和private方法是无法继承覆盖的，其对应的对象类型是固定的。一般，编译器会对final方法进行展开处理，来提高效率，就像c++里的inline函数。不过对于类的方法能不加final，就尽量不加，但是能private的，尽量private。</p>
+<p>现在说说上面这个简单例子，<em>Cycle.echo()</em>方法传入的都是Cycle的子类类型，都可以upcast到Cycle类型，但是具体运行到name()和wheels()方法时候，都进行了动态绑定，执行的是子类的方法。这样做的好处是在加入新的子类，e.g. Unicycle时候，基类Cycle根本不需要做任何改变，执行echo方法，如果传入的是Unicycle的对象，就会动态绑定到新编写的方法。这样就可以做到“对修改关闭，对扩展开放了”。</p>
+<h3 id="Covariant-Return"><a href="#Covariant-Return" class="headerlink" title="Covariant Return"></a>Covariant Return</h3><p>子类在覆盖基类的方法时，方法的签名是必须一致的，但是return的类型不一定要一致，子类返回的是父类返回类型的子类型也是可以的，因为这完全不妨碍upcast。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Grain</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="string">"Grain"</span>; &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Wheat</span> <span class="keyword">extends</span> <span class="title">Grain</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="string">"Wheat"</span>; &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mill</span> </span>&#123;</div><div class="line">    <span class="function">Grain <span class="title">process</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> Grain(); &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WheatMill</span> <span class="keyword">extends</span> <span class="title">Mill</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function">Wheat <span class="title">process</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> Wheat(); &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CovariantReturn</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Mill m = <span class="keyword">new</span> Mill();</div><div class="line">        Grain g = m.process();</div><div class="line">        println(g);</div><div class="line"></div><div class="line">        m = <span class="keyword">new</span> WheatMill();</div><div class="line">        g = m.process();</div><div class="line">        println(g);</div><div class="line">        <span class="comment">/* output: </span></div><div class="line">         Grain</div><div class="line">         Wheat</div><div class="line">         */</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><em>Mill的process()和子类WheatMill的process()就是存在这个差异。</em></p>
+<h3 id="Pitfall：构造器中调用动态绑定函数"><a href="#Pitfall：构造器中调用动态绑定函数" class="headerlink" title="Pitfall：构造器中调用动态绑定函数"></a>Pitfall：构造器中调用动态绑定函数</h3><p>最好还是不要那样做，有可能产生匪夷所思的错误。下面看个TIJ书上的例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Glyph</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123; println(<span class="string">"Glyph.draw()"</span>); &#125;</div><div class="line"></div><div class="line">    Glyph() &#123;</div><div class="line">        println(<span class="string">"Glyph() before draw()"</span>);</div><div class="line">        draw();</div><div class="line">        println(<span class="string">"Glyph() after draw()"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RoundGlyph</span> <span class="keyword">extends</span> <span class="title">Glyph</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> radius = <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123; println(<span class="string">"RoundGlyph.draw(), radius = "</span> + radius); &#125;</div><div class="line"></div><div class="line">    RoundGlyph() &#123;</div><div class="line">        println(<span class="string">"RoundGlyph(), radius = "</span> + radius);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PolyConstructors</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">new</span> RoundGlyph();</div><div class="line">        <span class="comment">/* output: </span></div><div class="line">         Glyph() before draw()</div><div class="line">         RoundGlyph.draw(), radius = 0</div><div class="line">         Glyph() after draw()</div><div class="line">         RoundGlyph(), radius = 1</div><div class="line">         */</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在运行<em>new RoundGlyph();</em>这个语句时候，先要调用父类Glyph的构造器，但是Glyph()的draw()方法是动态绑定到RoundGlyph的对象上的，而该对象尚未构造完成，所有的实例域都被初始化为二进制0，所以打印出来的radius是0。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/多态/">多态</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2015/09/01/TIJ-读书笔记-多态/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/09/01/TIJ-读书笔记-多态/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2015/08/30/TIJ-读书笔记-复用类/" title="TIJ 读书笔记 -- 复用类" itemprop="url">TIJ 读书笔记 -- 复用类</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-30T08:15:38.000Z" itemprop="datePublished"> 发表于 2015-08-30</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>平时使用java，写的最多也就是mapreduce代码，除了刚开始会带来一点新鲜感，等到熟悉map、reduce这一套之后，剩下的就是机械重复。这种厌倦感重新燃起了深入学习java的欲望。正好家里有一本java编程思想，就抓起来看了第七章，略有一点小感悟，就作为读书笔记写下来。希望自己能坚持看下去、写下去。</p>
+<hr>
+<h3 id="组合和继承"><a href="#组合和继承" class="headerlink" title="组合和继承"></a>组合和继承</h3><p>感觉平时还是用组合比较多，继承基本不用（除了继承一下Mapper和Reducer，这种条条框框的代码，用继承，确实可以给使用者带来不少便利）。我觉得组合最大的好处就是给了复用代码的程序员更大的定制空间：</p>
+<ol>
+<li>可以选择性的暴露原有的接口；</li>
+<li>重新定制一下原有的接口（当然要真正达到以假乱真的效果，还是需要继承一下，Adapter模式就是这么搞的）。</li>
+</ol>
+<p>另外，对于继承，父类想要暴露出来的接口，应该是public，因为二次开发想要继承的子类很有可能是出现在其他包下面。</p>
+<h3 id="语言细节"><a href="#语言细节" class="headerlink" title="语言细节"></a>语言细节</h3><h4 id="构造函数调用顺序"><a href="#构造函数调用顺序" class="headerlink" title="构造函数调用顺序"></a>构造函数调用顺序</h4><p>构造函数的初始化顺序，一般都是先父类，后子类。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Game</span> </span>&#123;</div><div class="line">    Game() &#123;</div><div class="line">        println(<span class="string">"Game"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BoardGame</span> <span class="keyword">extends</span> <span class="title">Game</span> </span>&#123;</div><div class="line">    BoardGame(<span class="keyword">int</span> size) &#123;</div><div class="line">        <span class="comment">// The compiler auto-insert super() here.</span></div><div class="line">        println(<span class="string">"BoardGame"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Chess</span> <span class="keyword">extends</span> <span class="title">BoardGame</span> </span>&#123;</div><div class="line">    Chess() &#123;</div><div class="line">        <span class="keyword">super</span>(<span class="number">11</span>);</div><div class="line">        println(<span class="string">"Chess"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">new</span> Chess();</div><div class="line">        <span class="comment">/* output:</span></div><div class="line">            Game</div><div class="line">            BoardGame</div><div class="line">            Chess</div><div class="line">        */</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在生成Chess对象，首先会调用父类BoardGame（在BoardGame的构造方法中，编译器会自动加入父类Game的默认构造方法调用），发现BoardGame还有父类Game，所以整个初始化顺序就是：<br>Game -&gt; BoardGame -&gt; Chess</p>
+<h4 id="类的加载顺序"><a href="#类的加载顺序" class="headerlink" title="类的加载顺序"></a>类的加载顺序</h4><p>类的加载发生在第一次new对象或调用static变量（方法）时。其变量的初始化顺序是先static变量，后实例变量；先父类，后子类。这个顺序是比较合理的，static变量是独立于类的实例的，所以在类加载的时候率先初始化，而实例变量等到真正需要new一个实例的时候再初始化；同样，子类是依赖于父类的，所以父类先初始化。这个过程很好验证，下面给个例子说明。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Insect</span> </span>&#123;</div><div class="line">    Insect() &#123;</div><div class="line">        println(<span class="string">"Insect: constructor"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    &#123;</div><div class="line">        println(<span class="string">"Insect: instance initialization"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        println(<span class="string">"Insect: static initialization"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Beetle</span> <span class="keyword">extends</span> <span class="title">Insect</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> loadTimes = <span class="number">0</span>;</div><div class="line">    Beetle() &#123;</div><div class="line">        println(<span class="string">"Beetle: constructor"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        println(<span class="string">"Beetle: static initialization"</span>);</div><div class="line">        loadTimes++;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>Insect的初始化顺序<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Insect();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>Insect: static initialization<br>Insect: instance initialization<br>Insect: constructor</p>
+</blockquote>
+<ul>
+<li>Insect和Beetle的初始化顺序<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Beetle();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>Insect: static initialization<br>Beetle: static initialization<br>Insect: instance initialization<br>Insect: constructor<br>Beetle: constructor</p>
+</blockquote>
+<h4 id="final-保留字段的用法"><a href="#final-保留字段的用法" class="headerlink" title="final 保留字段的用法"></a>final 保留字段的用法</h4><p>final修饰符，大概有三个用途，修饰变量、方法、类。</p>
+<h5 id="修饰变量"><a href="#修饰变量" class="headerlink" title="修饰变量"></a>修饰变量</h5><p>final修饰变量，那么变量就成了常量，初始化之后不能“修改”，对于基本类型无法修改值，对于非基本类型，无法修改引用指向的对象，但是对象的内容还是可以修改的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalData</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> n = <span class="number">4</span>;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span>[] array = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        FinalData fd = <span class="keyword">new</span> FinalData();</div><div class="line">        <span class="comment">// fd.n = 5; // The final field FinalData.n cannot be assigned.</span></div><div class="line">        <span class="comment">// fd.array = new int[4]; // The final field FinalData.array cannot be assigned</span></div><div class="line">        println(<span class="string">"array[0] = "</span> + fd.array[<span class="number">0</span>]);</div><div class="line">        fd.array[<span class="number">0</span>] = <span class="number">4</span>;</div><div class="line">        println(<span class="string">"array[0] = "</span> + fd.array[<span class="number">0</span>]);</div><div class="line"></div><div class="line">        <span class="comment">/* output:</span></div><div class="line">            array[0] = 0</div><div class="line">            array[0] = 4</div><div class="line">        */</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>final字段是必须初始化完成的，即便不在构造函数之前，也要在构造函数中完成。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlankFinal</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> i = <span class="number">0</span>; <span class="comment">// Initialized final</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> j; <span class="comment">// Blank final</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Poppet p; <span class="comment">// Blank final reference</span></div><div class="line"></div><div class="line">    <span class="comment">// Initialize all blank finals in the constructor.</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BlankFinal</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        j = x;</div><div class="line">        p = <span class="keyword">new</span> Poppet(x);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">new</span> BlankFinal(<span class="number">10</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h5 id="修饰方法和类"><a href="#修饰方法和类" class="headerlink" title="修饰方法和类"></a>修饰方法和类</h5><p>用final修饰的方法不能被继承后override；final类则不能被继承，String类就是final类。这个平时基本没怎么用过。TIJ的作者也表示慎用final来修饰方法和类。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/继承/">继承</a><a href="/blog/tags/组合/">组合</a><a href="/blog/tags/final/">final</a><a href="/blog/tags/类加载/">类加载</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2015/08/30/TIJ-读书笔记-复用类/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/08/30/TIJ-读书笔记-复用类/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2015/07/21/mysql数据插入优化/" title="mysql数据插入优化" itemprop="url">mysql数据插入优化</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2015-07-21T13:59:38.000Z" itemprop="datePublished"> 发表于 2015-07-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>之前项目，有个任务需要将每天的批量任务运算结果插入到mysql数据库中，以备后续查询，运算结果条数大概在100w左右，如果一条条插入，需要几十分钟，竟然和产生数据的批量任务运行时间相当。经过优化之后，插入性能差不多有10倍的提升。在这里记录一下调研调优的整个过程，权当自我总结。^_^</p>
+<h3 id="mysql数据插入方法"><a href="#mysql数据插入方法" class="headerlink" title="mysql数据插入方法"></a>mysql数据插入方法</h3><ul>
+<li>调用Statement相关方法，有单个调用和批量处理两种</li>
+<li>调用PreparedStatement相关方法，同样有两种方式</li>
+<li>load方法，很好很强大</li>
+</ul>
+<p>下面一一介绍这些方法，并随带样例代码加以说明。</p>
+<h4 id="Database-Connection"><a href="#Database-Connection" class="headerlink" title="Database Connection"></a>Database Connection</h4><p>为了方便说明，只是简单做了一下包装。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DbConnectionManager</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> DbConfiguration dbConfiguration = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">static</span> &#123;</div><div class="line">        dbConfiguration = DbConfiguration.instance();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Class.forName(dbConfiguration.getDriver());</div><div class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;   </div><div class="line">    &#125;   </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</div><div class="line">        String url = dbConfiguration.getUrl();</div><div class="line">        String username = dbConfiguration.getUsername();</div><div class="line">        String password = dbConfiguration.getPassword();</div><div class="line">        Connection connection = <span class="keyword">null</span>;</div><div class="line">        connection = DriverManager.getConnection(url, username, password);</div><div class="line">        connection.setAutoCommit(<span class="keyword">false</span>);  <span class="comment">// 为了提高批量插入的性能</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> connection;</div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="Statement"><a href="#Statement" class="headerlink" title="Statement"></a>Statement</h4><p>调用Statement相关方法，单个插入。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">runInsertViaStatement</span><span class="params">(List&lt;DataUnit&gt; data)</span> </span>&#123;</div><div class="line">    <span class="keyword">long</span> costTime = <span class="number">0</span>;</div><div class="line">    Connection connection = <span class="keyword">null</span>;</div><div class="line">    Statement statement = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        connection = DbConnectionManager.getConnection();</div><div class="line">        statement = connection.createStatement();</div><div class="line">        <span class="keyword">long</span> begin = System.currentTimeMillis();</div><div class="line">        <span class="keyword">for</span> (DataUnit record : data) &#123;</div><div class="line">            String sql = String.format(<span class="string">"insert ignore into term_uv values ('%s', '%s', %s, %s)"</span>,</div><div class="line">                    record.term, record.dt, record.uv, record.platform);</div><div class="line">            statement.execute(sql);</div><div class="line">        &#125;   </div><div class="line">        connection.commit();</div><div class="line">        costTime += (System.currentTimeMillis() - begin);</div><div class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            statement.close();</div><div class="line">            connection.close();</div><div class="line">        &#125; <span class="keyword">catch</span> (SQLException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;   </div><div class="line">    &#125;   </div><div class="line"></div><div class="line">    <span class="keyword">return</span> costTime;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="StatementBatch"><a href="#StatementBatch" class="headerlink" title="StatementBatch"></a>StatementBatch</h4><p>批量插入数据，每1000条数据执行一次executeBatch。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">statement = connection.createStatement();</div><div class="line"><span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line"><span class="keyword">for</span> (DataUnit record : data) &#123;</div><div class="line">    count += <span class="number">1</span>;</div><div class="line">    String sql = String.format(<span class="string">"insert ignore into term_uv values('%s', '%s', %s, %s)"</span>,</div><div class="line">            record.term, record.dt, record.uv, record.platform);</div><div class="line">    statement.addBatch(sql);</div><div class="line">    <span class="keyword">if</span> (count % <span class="number">1000</span> == <span class="number">0</span>) &#123;</div><div class="line">        statement.executeBatch();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">statement.executeBatch();</div></pre></td></tr></table></figure></p>
+<h4 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h4><p>这种方式也是一条条插入，但是不用重复为每条sql解析语法，所以相对于Statement方法，会快一些，但是在实验中，并没有差多少，可能是sql太过简单。用PreparedStatement也有缺点，就是一个statement只能为一条sql语句服务。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">String sql = <span class="string">"insert ignore into term_uv (term, dt, uv, platform) values (?, ?, ?, ?)"</span>;</div><div class="line">statement = connection.prepareStatement(sql);</div><div class="line"><span class="keyword">for</span> (DataUnit record : data) &#123;</div><div class="line">    statement.setString(<span class="number">1</span>, record.term);</div><div class="line">    statement.setString(<span class="number">2</span>, record.dt);</div><div class="line">    statement.setString(<span class="number">3</span>, record.uv);</div><div class="line">    statement.setString(<span class="number">4</span>, record.platform);</div><div class="line">    statement.executeUpdate();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="PreparedStatementBatch"><a href="#PreparedStatementBatch" class="headerlink" title="PreparedStatementBatch"></a>PreparedStatementBatch</h4><p>这个就是上面几种方法的终极组合。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">String sql = <span class="string">"insert ignore into term_uv (term, dt, uv, platform) values (?, ?, ?, ?)"</span>;</div><div class="line">statement = connection.prepareStatement(sql);</div><div class="line"><span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line"><span class="keyword">for</span> (DataUnit record : data) &#123;</div><div class="line">    count += <span class="number">1</span>;</div><div class="line">    statement.setString(<span class="number">1</span>, record.term);</div><div class="line">    statement.setString(<span class="number">2</span>, record.dt);</div><div class="line">    statement.setString(<span class="number">3</span>, record.uv);</div><div class="line">    statement.setString(<span class="number">4</span>, record.platform);</div><div class="line">    statement.addBatch();</div><div class="line">    <span class="keyword">if</span> (count % <span class="number">1000</span> == <span class="number">0</span>) &#123;</div><div class="line">        statement.executeBatch();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">statement.executeBatch();</div></pre></td></tr></table></figure></p>
+<h4 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h4><p>直接通过文件方式load到mysql中，这应该是最快的方式，实验结果也是如此。但是缺点就是要把数据写到文件中，然后load到mysql中。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">statement = connection.createStatement();</div><div class="line">String sql = String.format(<span class="string">"load data local infile '%s' replace into table term_uv"</span>, filename);</div><div class="line">statement.executeUpdate(sql);</div></pre></td></tr></table></figure></p>
+<p>###实验结果</p>
+<table>
+<thead>
+<tr>
+<th>数据量</th>
+<th>Statement</th>
+<th>PreparedStatement</th>
+<th>StatementBatch</th>
+<th>PreparedStatementBatch</th>
+<th>Load</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1w</td>
+<td>273231 ms</td>
+<td>273045 ms</td>
+<td>274518 ms</td>
+<td>273063 ms</td>
+<td>1002 ms</td>
+</tr>
+</tbody>
+</table>
+<p>除了load，其它方法基本差不多，当时也没有多调查，就直接采用load。</p>
+<h4 id="rewriteBatchedStatements"><a href="#rewriteBatchedStatements" class="headerlink" title="rewriteBatchedStatements"></a>rewriteBatchedStatements</h4><p>做完项目之后，google了一把，才发现原来默认情况下，jdbc对批量执行还是一条条处理。要开启批量模式，需要在建立connection的url参数中设置rewriteBatchedStatements为true。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jdbc:mysql://&lt;host&gt;:&lt;port&gt;/&lt;db&gt;?rewriteBatchedStatements=<span class="literal">true</span></div></pre></td></tr></table></figure></p>
+<p>新的实验结果如下：</p>
+<table>
+<thead>
+<tr>
+<th>数据量</th>
+<th>Statement</th>
+<th>PreparedStatement</th>
+<th>StatementBatch</th>
+<th>PreparedStatementBatch</th>
+<th>Load</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1w</td>
+<td>273231 ms</td>
+<td>273045 ms</td>
+<td>2555 ms</td>
+<td>1181 ms</td>
+<td>1002 ms</td>
+</tr>
+<tr>
+<td>10w</td>
+<td>–</td>
+<td>–</td>
+<td>18361 ms</td>
+<td>7850 ms</td>
+<td>6812 ms</td>
+</tr>
+</tbody>
+</table>
+<p>P.S. 对于term字段中包含单引号的需要转义<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">term.replace(<span class="string">"'"</span>, <span class="string">"''"</span>);</div></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/database/">database</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/mysql/">mysql</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2015/07/21/mysql数据插入优化/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/07/21/mysql数据插入优化/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2015/07/14/hexo-github-搭建blog/" title="hexo + github 搭建blog" itemprop="url">hexo + github 搭建blog</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2015-07-14T14:33:38.000Z" itemprop="datePublished"> 发表于 2015-07-14</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>网络上，随便搜一下hexo、github等关键词，就能出来一大堆相当详尽的博客搭建介绍，<br>我也是一步步跟着做下来，本文主要记录一些自己碰到的问题。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
+<li>安装<a href="https://nodejs.org/" target="_blank" rel="external">Node.js</a>和git，这里不再赘述</li>
+<li><p>检查npm是不是在PATH下面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">which</span> npm</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装hexo</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure>
+<p>转圈圈运行之后，报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">npm ERR! registry error parsing json</div><div class="line">npm ERR! Linux 2.6.32-358.el6.x86_64</div><div class="line">npm ERR! argv &quot;&lt;nodejs-dir&gt;/bin/node&quot; &quot;&lt;nodejs-dir&gt;/bin/npm&quot; &quot;install&quot; &quot;-g&quot; &quot;hexo-cli&quot;</div><div class="line">npm ERR! node v0.12.6</div><div class="line">npm ERR! npm  v2.11.2</div><div class="line">npm ERR! Unexpected end of input</div></pre></td></tr></table></figure>
+<p>可能是被墙了，加一个国内的源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</div><div class="line">// or edit ~/.npmrc, put the following line into it</div><div class="line">// registry = https://registry.npm.taobao.org</div></pre></td></tr></table></figure>
+<p>现在就可以顺利安装了。</p>
+</li>
+</ol>
+<h3 id="创建blog"><a href="#创建blog" class="headerlink" title="创建blog"></a>创建blog</h3><ol>
+<li><p>在github上建一个名为blog的repo，然后clone到本地，在gh-pages分枝上建立<br>project page的方式来存放自己的blog</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> https://github.com/niaokedaoren/blog.git</div><div class="line">$ <span class="built_in">cd</span> blog</div><div class="line">$ git checkout --orphan gh-pages</div><div class="line">$ git rm -rf .</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"initial commit"</span></div><div class="line">$ git push origin gh-pages</div></pre></td></tr></table></figure>
+<p>报错：<br>error: src refspec github-pages does not match any.<br>error: failed to push some refs to ‘<a href="https://github.com/niaokedaoren/blog.git" target="_blank" rel="external">https://github.com/niaokedaoren/blog.git</a>‘<br>解决： push不能为空</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ touch README</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"add dummy README"</span></div><div class="line">$ git push origin gp-pages</div></pre></td></tr></table></figure>
+<p>上传一个rsa public key到github，可以实现无密钥登陆。</p>
+</li>
+<li><p>hexo建立blog</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init blog</div><div class="line">$ <span class="built_in">cd</span> blog</div><div class="line">$ npm install</div></pre></td></tr></table></figure>
+<p>生成blog并启动hexo server，可以在 <a href="http://localhost:4000访问blog" target="_blank" rel="external">http://localhost:4000访问blog</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div><div class="line">$ hexo s</div></pre></td></tr></table></figure>
+</li>
+<li><p>配置_config.yml</p>
+<ul>
+<li>deploy<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: ssh://git@github.com/niaokedaoren/blog.git</div><div class="line">  branch: gh-pages</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>注意</strong>: 如果这里repo写成<a href="https://github.com/niaokedaoren/blog.git" target="_blank" rel="external">https://github.com/niaokedaoren/blog.git</a><br>就会报错：<a href="http://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed" target="_blank" rel="external"><em>pushing-to-git-returning-error-code-403-fatal-http-request-failed</em></a></p>
+<ul>
+<li>url<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">url: http://niaokedaoren.github.io/blog</div><div class="line">root: /blog/</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>否则部署到github上会无法加载css</p>
+</li>
+<li><p>选择主题</p>
+<p>我选择的是<a href="http://wuchong.me/blog/2014/11/20/how-to-use-jacman/" target="_blank" rel="external">jacman</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> &lt;blog-dir&gt;</div><div class="line">$ git <span class="built_in">clone</span> https://github.com/wuchong/jacman.git themes/jacman</div></pre></td></tr></table></figure>
+<p>可以注册一个多说，在<strong>themes/jacman/_config.yml</strong>配置一下多说shortname。</p>
+</li>
+<li><p>常用的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"post name"</span> <span class="comment">#写新的博客</span></div><div class="line">$ hexo new draft <span class="string">"draft name"</span> <span class="comment">#写博客草稿, scaffolds目录下可以编辑layout</span></div><div class="line">$ hexo clean <span class="comment">#清理生成的页面</span></div><div class="line">$ hexo g</div><div class="line">$ hexo s</div><div class="line">$ hexo d</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="写作工具"><a href="#写作工具" class="headerlink" title="写作工具"></a>写作工具</h3><p>我用的是sublime text2，具体配置参考<a href="http://www.jianshu.com/p/378338f10263" target="_blank" rel="external">http://www.jianshu.com/p/378338f10263</a></p>
+<p><em>参考</em></p>
+<ol>
+<li><a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="external">http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/</a></li>
+<li><a href="http://www.aips.me/hexo-independent-blog-new-ways.html" target="_blank" rel="external">http://www.aips.me/hexo-independent-blog-new-ways.html</a></li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/tools/">tools</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/hexo/">hexo</a><a href="/blog/tags/github/">github</a><a href="/blog/tags/blog/">blog</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2015/07/14/hexo-github-搭建blog/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/07/14/hexo-github-搭建blog/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2015/07/14/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2015-07-14T10:33:38.000Z" itemprop="datePublished"> 发表于 2015-07-14</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2015/07/14/hello-world/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/07/14/hello-world/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/blog/categories/database/" title="database">database<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/java/" title="java">java<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/tools/" title="tools">tools<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/blog/tags/blog/" title="blog">blog<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Comparable/" title="Comparable">Comparable<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/多态/" title="多态">多态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/继承/" title="继承">继承<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/组合/" title="组合">组合<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/final/" title="final">final<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/类加载/" title="类加载">类加载<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/容器/" title="容器">容器<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Collections/" title="Collections">Collections<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/sort/" title="sort">sort<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/protobuf/" title="protobuf">protobuf<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Comparator/" title="Comparator">Comparator<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/接口/" title="接口">接口<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/策略模式/" title="策略模式">策略模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/适配模式/" title="适配模式">适配模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/io/" title="io">io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/github/" title="github">github<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/base64/" title="base64">base64<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<section class="info">
+		<p> It&#39;s a wonderful world. <br/>
+			Just enjoy life.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/blog/about" target="_blank" title="Baojf">Baojf</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.0.3.min.js"></script>
+<script src="/blog/js/jquery.imagesloaded.min.js"></script>
+<script src="/blog/js/gallery.js"></script>
+<script src="/blog/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?faf6858afbda07bb3e46473949e1e6fb";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/blog/img/scrollup.png"/></a>
+	</div>
+	<script src="/blog/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+ </html>

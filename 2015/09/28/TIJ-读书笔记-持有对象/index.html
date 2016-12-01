@@ -1,0 +1,611 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>TIJ 读书笔记 -- 持有对象 | Baojf&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Baojf">
+    
+
+    
+    <meta name="description" content="Overview这一章主要讲java容器类，以及相关类的一些基本用法，看完之后对这些java容器之间关系有了一定的把握。总的来说，java容器分为两大类：
+
+Collection该接口定义了线性容器，List、Set、Queue都是继承自它。
+Map该接口定义了key-value对的容器。
+
+同时Collections类里面定义了一堆静态函数，提供辅助功能，方便用户操作容器类，例如sort、二分查">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TIJ 读书笔记 -- 持有对象">
+<meta property="og:url" content="http://niaokedaoren.github.io/blog/2015/09/28/TIJ-读书笔记-持有对象/index.html">
+<meta property="og:site_name" content="Baojf's blog">
+<meta property="og:description" content="Overview这一章主要讲java容器类，以及相关类的一些基本用法，看完之后对这些java容器之间关系有了一定的把握。总的来说，java容器分为两大类：
+
+Collection该接口定义了线性容器，List、Set、Queue都是继承自它。
+Map该接口定义了key-value对的容器。
+
+同时Collections类里面定义了一堆静态函数，提供辅助功能，方便用户操作容器类，例如sort、二分查">
+<meta property="og:image" content="http://7xkcol.com1.z0.glb.clouddn.com/java/tij/holding/collections_uml.png">
+<meta property="og:updated_time" content="2016-12-01T15:26:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TIJ 读书笔记 -- 持有对象">
+<meta name="twitter:description" content="Overview这一章主要讲java容器类，以及相关类的一些基本用法，看完之后对这些java容器之间关系有了一定的把握。总的来说，java容器分为两大类：
+
+Collection该接口定义了线性容器，List、Set、Queue都是继承自它。
+Map该接口定义了key-value对的容器。
+
+同时Collections类里面定义了一堆静态函数，提供辅助功能，方便用户操作容器类，例如sort、二分查">
+<meta name="twitter:image" content="http://7xkcol.com1.z0.glb.clouddn.com/java/tij/holding/collections_uml.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Baojf&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/blog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/blog/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/blog/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/blog/"><img src="/blog/img/logo.png" alt="Baojf&#39;s blog" title="Baojf&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/blog/" title="Baojf&#39;s blog">Baojf&#39;s blog</a></h1>
+				<h2 class="blog-motto">thinking along with programming</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/blog/">Home</a></li>
+					
+						<li><a href="/blog/archives">Archives</a></li>
+					
+						<li><a href="/blog/about">About</a></li>
+					
+						<li><a href="/blog/categories">Categories</a></li>
+					
+						<li><a href="/blog/tags">Tags</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:niaokedaoren.github.io/blog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/blog/2015/09/28/TIJ-读书笔记-持有对象/" title="TIJ 读书笔记 -- 持有对象" itemprop="url">TIJ 读书笔记 -- 持有对象</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2015-09-28T14:58:47.000Z" itemprop="datePublished"> 发表于 2015-09-28</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Overview"><span class="toc-number">1.</span> <span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparable-vs-Comparator"><span class="toc-number">2.</span> <span class="toc-text">Comparable vs Comparator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Queue-and-Stack"><span class="toc-number">3.</span> <span class="toc-text">Queue and Stack</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p><img src="http://7xkcol.com1.z0.glb.clouddn.com/java/tij/holding/collections_uml.png" alt="Collections UML"><br>这一章主要讲java容器类，以及相关类的一些基本用法，看完之后对这些java容器之间关系有了一定的把握。总的来说，java容器分为两大类：</p>
+<ul>
+<li>Collection<br>该接口定义了线性容器，List、Set、Queue都是继承自它。</li>
+<li>Map<br>该接口定义了key-value对的容器。</li>
+</ul>
+<p>同时Collections类里面定义了一堆静态函数，提供辅助功能，方便用户操作容器类，例如sort、二分查找、shuffle等功能。</p>
+<p>Java容器类最大的特点就是接口定义和具体实现是解耦的，这个很方便第三方提供其它的优化实现，来替代java sdk中的实现，例如著名的guava库。</p>
+<p>看书，除了温故，当然还有知新。我不喜欢泛泛总结，下面还是举些例子。</p>
+<h3 id="Comparable-vs-Comparator"><a href="#Comparable-vs-Comparator" class="headerlink" title="Comparable vs Comparator"></a>Comparable vs Comparator</h3><p>以前也看过，但是老是映像不深，总觉的差不多，因为两个都是接口。现在谈谈本次看书的体会：</p>
+<ul>
+<li>Comparable<br>需要实现compareTo方法，这个接口像是一个特质（用scala里的trait解释，会更好），一个类实现了这个接口，就说明这个类的对象具有可比性这个特质，这样在调用Collections的sort方法时，就不需要额外提供其它的比较器。</li>
+<li>Comparator<br>需要实现compare方法，这个接口更像是一种策略模式，它是独立于需要比较的类；不同的实现可以给同一个类提供不同的比较策略，使用起来会更加灵活。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">User</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> id;</div><div class="line">    <span class="keyword">final</span> String name;</div><div class="line">    </div><div class="line">    User(<span class="keyword">int</span> id, String name) &#123;</div><div class="line">        <span class="keyword">this</span>.id = id;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(User o)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.id - o.id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"("</span> + id + <span class="string">", "</span> + name + <span class="string">")"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在有User类，实现了Comparable接口，所以具有User类对象之间具有可比性，现在的实现是按照id来排序的。</p>
+<p>测试代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComparableVsComparator</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;User&gt; <span class="title">generateTestData</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;User&gt; users = <span class="keyword">new</span> ArrayList&lt;User&gt;();</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="number">2</span>, <span class="string">"Jack"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="number">1</span>, <span class="string">"Tom"</span>));</div><div class="line">        users.add(<span class="keyword">new</span> User(<span class="number">3</span>, <span class="string">"Lucy"</span>));</div><div class="line">        <span class="keyword">return</span> users;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testComparable</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;User&gt; users = ComparableVsComparator.generateTestData();</div><div class="line">        Collections.sort(users);</div><div class="line">        System.out.println(users);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"Test comparable: "</span>);</div><div class="line">        ComparableVsComparator.testComparable();</div><div class="line">    &#125;</div><div class="line"><span class="comment">/* Output</span></div><div class="line"> Test comparable: </div><div class="line"> [(1, Tom), (2, Jack), (3, Lucy)]</div><div class="line"> */</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出结果是按照user id来升序排列的，一切都显得很顺利，但是突然有需求，需要对user name进行字母序排序，这下Comparator可以拿出来一展身手了，原来的代码完全不用修改,只需要另外提供一个字母序比较的Comparator实现。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserComparatorViaName</span> <span class="keyword">implements</span> <span class="title">Comparator</span>&lt;<span class="title">User</span>&gt; </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(User o1, User o2)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> o1.name.compareTo(o2.name);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>测试代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testComparator</span><span class="params">()</span> </span>&#123;</div><div class="line">    List&lt;User&gt; users = ComparableVsComparator.generateTestData();</div><div class="line">    Collections.sort(users, <span class="keyword">new</span> UserComparatorViaName());</div><div class="line">    System.out.println(users);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    System.out.println(<span class="string">"Test comparator: "</span>);</div><div class="line">    ComparableVsComparator.testComparator();</div><div class="line">&#125;</div><div class="line"><span class="comment">/* Output</span></div><div class="line"> Test comparator: </div><div class="line"> [(2, Jack), (3, Lucy), (1, Tom)]</div><div class="line"> */</div></pre></td></tr></table></figure></p>
+<h3 id="Queue-and-Stack"><a href="#Queue-and-Stack" class="headerlink" title="Queue and Stack"></a>Queue and Stack</h3><p>因为List下的ArrayList、LinkedList，以及Set下的HashSet、Map下的HashMap平时都比较用的多，就不举例子了。下面就着重介绍一下Queue和Stack，官方API推荐使用双端队列接口<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Deque.html" target="_blank" rel="external">Deque</a>的一种实现<a href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayDeque.html" target="_blank" rel="external">ArrayDeque</a>来模拟Queue和Stack的行为，官方文档中说ArrayDeque要比LinkedList速度要快，但同样是线程不安全的。</p>
+<blockquote>
+<p>Resizable-array implementation of the Deque interface. Array deques have no capacity restrictions; they grow as necessary to support usage. They are not thread-safe; in the absence of external synchronization, they do not support concurrent access by multiple threads. Null elements are prohibited. This class is likely to be faster than Stack when used as a stack, and faster than LinkedList when used as a queue.</p>
+</blockquote>
+<ul>
+<li><p>Queue</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testQueue</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    Deque&lt;String&gt; queue = <span class="keyword">new</span> ArrayDeque&lt;String&gt;();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++) &#123;</div><div class="line">        queue.addLast(generator.next()); <span class="comment">// push</span></div><div class="line">    &#125;</div><div class="line">    System.out.println(<span class="string">"Queue: "</span> + queue);</div><div class="line">    System.out.print(<span class="string">"Pop order:"</span>);</div><div class="line">    <span class="keyword">while</span> (queue.isEmpty() == <span class="keyword">false</span>) &#123;</div><div class="line">        String head = queue.removeFirst(); <span class="comment">// pop</span></div><div class="line">        System.out.print(<span class="string">" "</span> + head);</div><div class="line">    &#125;</div><div class="line">    System.out.println();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>Stack</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testStack</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    Deque&lt;String&gt; stack = <span class="keyword">new</span> ArrayDeque&lt;String&gt;();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;n; i++) &#123;</div><div class="line">        stack.addFirst(generator.next()); <span class="comment">// push</span></div><div class="line">    &#125;</div><div class="line">    System.out.println(<span class="string">"Stack: "</span> + stack);</div><div class="line">    System.out.print(<span class="string">"Pop order:"</span>);</div><div class="line">    <span class="keyword">while</span> (stack.isEmpty() == <span class="keyword">false</span>) &#123;</div><div class="line">        String head = stack.removeFirst(); <span class="comment">// pop</span></div><div class="line">        System.out.print(<span class="string">" "</span> + head);</div><div class="line">    &#125;</div><div class="line">    System.out.println();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/容器/">容器</a><a href="/blog/tags/Collections/">Collections</a><a href="/blog/tags/sort/">sort</a><a href="/blog/tags/Comparable/">Comparable</a><a href="/blog/tags/Comparator/">Comparator</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://niaokedaoren.github.io/blog/blog/2015/09/28/TIJ-读书笔记-持有对象/" data-title="TIJ 读书笔记 -- 持有对象 | Baojf&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/blog/2016/02/28/TIJ读书笔记-IO/" title="TIJ读书笔记--IO">
+  <strong>上一篇：</strong><br/>
+  <span>
+  TIJ读书笔记--IO</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/blog/2015/09/07/TIJ-读书笔记-接口/"  title="TIJ 读书笔记 -- 接口">
+ <strong>下一篇：</strong><br/> 
+ <span>TIJ 读书笔记 -- 接口
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/09/28/TIJ-读书笔记-持有对象/" data-title="TIJ 读书笔记 -- 持有对象" data-url="http://niaokedaoren.github.io/blog/blog/2015/09/28/TIJ-读书笔记-持有对象/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Overview"><span class="toc-number">1.</span> <span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparable-vs-Comparator"><span class="toc-number">2.</span> <span class="toc-text">Comparable vs Comparator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Queue-and-Stack"><span class="toc-number">3.</span> <span class="toc-text">Queue and Stack</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/blog/categories/database/" title="database">database<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/java/" title="java">java<sup>6</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/tools/" title="tools">tools<sup>2</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/blog/tags/blog/" title="blog">blog<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Comparable/" title="Comparable">Comparable<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/多态/" title="多态">多态<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/继承/" title="继承">继承<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/组合/" title="组合">组合<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/final/" title="final">final<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/类加载/" title="类加载">类加载<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/容器/" title="容器">容器<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Collections/" title="Collections">Collections<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/sort/" title="sort">sort<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/protobuf/" title="protobuf">protobuf<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/Comparator/" title="Comparator">Comparator<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/接口/" title="接口">接口<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/策略模式/" title="策略模式">策略模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/适配模式/" title="适配模式">适配模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/io/" title="io">io<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/github/" title="github">github<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/base64/" title="base64">base64<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	
+	<section class="info">
+		<p> It&#39;s a wonderful world. <br/>
+			Just enjoy life.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/blog/about" target="_blank" title="Baojf">Baojf</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/blog/js/jquery-2.0.3.min.js"></script>
+<script src="/blog/js/jquery.imagesloaded.min.js"></script>
+<script src="/blog/js/gallery.js"></script>
+<script src="/blog/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"baojf"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?faf6858afbda07bb3e46473949e1e6fb";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/blog/img/scrollup.png"/></a>
+	</div>
+	<script src="/blog/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
