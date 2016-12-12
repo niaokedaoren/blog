@@ -82,6 +82,78 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/blog/2016/12/12/Sequence-File的优点/" title="Sequence File的优点" itemprop="url">Sequence File的优点</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2016-12-12T13:54:02.000Z" itemprop="datePublished"> 发表于 2016-12-12</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>最近遇到个问题，我需要处理上游生成的很多数据文件，文件统一存放在hdfs上，所以方便用mr处理，但是单个文件的size差别很大，有几m的，也有几g对。我的整个处理流程分两步，第一步预处理文件，因为上游任务会陆续生产文件，所以单独起mr分别预处理；第二步，把预处理的文件全部merge在一起，预处理的文件我都是采用gz压缩，所以每个文件会启一个map，导致两个问题，1）大文件会拖慢整个job的节奏，2）小文件处理启动的map数量过多。</p>
+<h3 id="sequence-file"><a href="#sequence-file" class="headerlink" title="sequence file"></a>sequence file</h3><p>解决方案，就是预处理结果采用<a href="https://wiki.apache.org/hadoop/SequenceFile" target="_blank" rel="external">sequencefile</a>格式存储，因为sequencefile格式的文件支持大文件split成多个map执行，多个小文件合并成一个map任务执行。用sequencefile，需要注意一个问题，就是下游使用这些文件的map任务的key类型，要和上游输出的key类型一致，例如我们例子中的LongWritable类型；另外，如果mr的sequencefile输出要导入到hive中使用，那么hive就会自动忽略key字段，一般的解决方案，就是输出一个new Text(“”)的key，然后需要的字段学到value中。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><ol>
+<li><p>预处理mr代码，需要setOutputFormatClass为SequenceFileOutputFormat.class，另外注意这里设置OutputKeyClass为LongWritable，下游任务的map key需要保持一致。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public class CookAsPb extends Configured implements Tool &#123;</div><div class="line">    public int run(String[] strings) throws Exception &#123;</div><div class="line">        Configuration conf = getConf();</div><div class="line">        conf.set(&quot;mapreduce.map.output.compress&quot;, &quot;true&quot;);</div><div class="line">        ...</div><div class="line">        Job job = Job.getInstance(conf);</div><div class="line">        job.setJarByClass(getClass());</div><div class="line">        job.setMapperClass(CookAsPbMapper.class);</div><div class="line">        job.setOutputKeyClass(LongWritable.class);</div><div class="line">        job.setOutputValueClass(Text.class);</div><div class="line">        job.setOutputFormatClass(SequenceFileOutputFormat.class);</div><div class="line">        FileOutputFormat.setCompressOutput(job, true);</div><div class="line">        FileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);</div><div class="line">       ...</div><div class="line">        return ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) throws Exception &#123;</div><div class="line">        int ret = ToolRunner.run(new Configuration(), new CookAsPb(), args);</div><div class="line">        System.exit(ret);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>mereg任务代码，setInputFormatClass为SequenceFileOutputFormat.class，mapper代码的input key为LongWritable。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public class MergePbs extends Configured implements Tool &#123;</div><div class="line">    public int run(String[] strings) throws Exception &#123;</div><div class="line">        ...</div><div class="line">        job.setMapperClass(MergePbsMapper.class);</div><div class="line">        job.setInputFormatClass(SequenceFileInputFormat.class);</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class MergePbsMapper extends Mapper&lt;LongWritable, Text, Text, Text&gt; &#123;</div><div class="line">    @Override</div><div class="line">    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/hadoop/">hadoop</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/mapreduce/">mapreduce</a><a href="/blog/tags/sequencefile/">sequencefile</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2016/12/12/Sequence-File的优点/#comments" class="ds-thread-count comments-count-link" data-thread-key="2016/12/12/Sequence-File的优点/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/blog/2016/12/02/搬到Mac上写博客/" title="搬到Mac上写博客" itemprop="url">搬到Mac上写博客</a>
   </h1>
   <p class="article-author">By
@@ -972,67 +1044,10 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/blog/2015/07/14/hello-world/" title="Hello World" itemprop="url">Hello World</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-14T10:33:38.000Z" itemprop="datePublished"> 发表于 2015-07-14</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
 
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/blog/2015/07/14/hello-world/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/07/14/hello-world/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
+  <nav id="page-nav" class="clearfix">
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="extend next" rel="next" href="/blog/page/2/">Next<span></span></a>
+  </nav>
 
 </div>
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
@@ -1051,6 +1066,10 @@
 		
 		  
 			<li><a href="/blog/categories/database/" title="database">database<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/blog/categories/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
 		  
 		
 		  
@@ -1075,7 +1094,19 @@
 			
 		
 			
-				<li><a href="/blog/tags/Comparable/" title="Comparable">Comparable<sup>1</sup></a></li>
+				<li><a href="/blog/tags/sort/" title="sort">sort<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/mapreduce/" title="mapreduce">mapreduce<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/sequencefile/" title="sequencefile">sequencefile<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/多态/" title="多态">多态<sup>1</sup></a></li>
 			
 		
 			
@@ -1095,10 +1126,6 @@
 			
 		
 			
-				<li><a href="/blog/tags/多态/" title="多态">多态<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/blog/tags/容器/" title="容器">容器<sup>1</sup></a></li>
 			
 		
@@ -1107,15 +1134,19 @@
 			
 		
 			
-				<li><a href="/blog/tags/sort/" title="sort">sort<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/blog/tags/protobuf/" title="protobuf">protobuf<sup>1</sup></a></li>
 			
 		
 			
+				<li><a href="/blog/tags/Comparable/" title="Comparable">Comparable<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/blog/tags/Comparator/" title="Comparator">Comparator<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/io/" title="io">io<sup>1</sup></a></li>
 			
 		
 			
@@ -1131,23 +1162,11 @@
 			
 		
 			
-				<li><a href="/blog/tags/io/" title="io">io<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/blog/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/blog/tags/github/" title="github">github<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/base64/" title="base64">base64<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/mysql/" title="mysql">mysql<sup>1</sup></a></li>
 			
 		
 		</ul>
