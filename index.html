@@ -82,6 +82,110 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/blog/2017/06/25/Spring-JMS-基于activemq/" title="Spring JMS -- 基于activemq" itemprop="url">Spring JMS -- 基于activemq</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
+		
+  <p class="article-time">
+    <time datetime="2017-06-25T07:21:48.000Z" itemprop="datePublished"> 发表于 2017-06-25</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>最近的项目使用activemq比较多，遇到了点坑，总结一下。用spring提供的jmsTemplate，包装一下jms的原始接口，使得消息发送代码很简洁；同时DefaultMessageListenerContainer，对消费消息也做了一定的包装，可以配置消费者数量的上下限。</p>
+<h3 id="pom依赖"><a href="#pom依赖" class="headerlink" title="pom依赖"></a>pom依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-context&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;$&#123;spring-framework.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-jms&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;$&#123;spring-framework.version&#125;&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;  </div><div class="line">    &lt;groupId&gt;org.apache.activemq&lt;/groupId&gt;  </div><div class="line">    &lt;artifactId&gt;activemq-core&lt;/artifactId&gt;  </div><div class="line">    &lt;version&gt;5.7.0&lt;/version&gt;  </div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h3 id="消息发送：jmsTemplate"><a href="#消息发送：jmsTemplate" class="headerlink" title="消息发送：jmsTemplate"></a>消息发送：jmsTemplate</h3><p>如果消费端需要给多方消费使用，那么最好采用VirtualTopic的模式，具体方法就是在发送端将队列名字命名VirtualTopic.xxxx，同时把队列设置成topic；在消费端，以queue的形式消费，队列名字设置为Consumer.xx.VirtualTopic.xxxx，这种订阅消费是持久订阅，所以一旦消费，不用担心中途停止而丢失消息，不过要注意消息积压。</p>
+<h4 id="1-ActiveMQConnectionFactory"><a href="#1-ActiveMQConnectionFactory" class="headerlink" title="1.ActiveMQConnectionFactory"></a>1.ActiveMQConnectionFactory</h4><ul>
+<li><p>spring配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</div><div class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</div><div class="line">       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd</div><div class="line">       http://www.springframework.org/schema/context</div><div class="line">       http://www.springframework.org/schema/context/spring-context-4.2.xsd&quot;&gt;</div><div class="line"></div><div class="line">    &lt;bean id=&quot;idolScoreMqPropertyConfig&quot;</div><div class="line">          class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;</div><div class="line">        &lt;property name=&quot;fileEncoding&quot; value=&quot;UTF-8&quot; /&gt;</div><div class="line">        &lt;property name=&quot;locations&quot;&gt;</div><div class="line">            &lt;list&gt;</div><div class="line">                &lt;value&gt;classpath*:properties/acmq-$&#123;profiles.active&#125;.properties&lt;/value&gt;</div><div class="line">            &lt;/list&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- ActiveMQ Topic --&gt;</div><div class="line">    &lt;bean id=&quot;idolScoreDestination&quot; class=&quot;org.apache.activemq.command.ActiveMQTopic&quot;&gt;</div><div class="line">        &lt;constructor-arg index=&quot;0&quot;&gt;</div><div class="line">            &lt;value&gt;$&#123;activemq.idolscore.queuename&#125;&lt;/value&gt;</div><div class="line">        &lt;/constructor-arg&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- ActiveMQ 连接工厂 --&gt;</div><div class="line">    &lt;bean id=&quot;idolScoreConnectionFactory&quot; class=&quot;org.apache.activemq.ActiveMQConnectionFactory&quot;&gt;</div><div class="line">        &lt;property name=&quot;brokerURL&quot;&gt;</div><div class="line">            &lt;value&gt;$&#123;activemq.idolscore.server&#125;&lt;/value&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line">        &lt;property name=&quot;userName&quot;&gt;</div><div class="line">            &lt;value&gt;$&#123;activemq.idolscore.user&#125;&lt;/value&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line">        &lt;property name=&quot;password&quot;&gt;</div><div class="line">            &lt;value&gt;$&#123;activemq.idolscore.password&#125;&lt;/value&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;!-- jms queue template --&gt;</div><div class="line">    &lt;bean id=&quot;jmsTemplate&quot;</div><div class="line">          class=&quot;org.springframework.jms.core.JmsTemplate&quot;&gt;</div><div class="line">        &lt;property name=&quot;connectionFactory&quot; ref=&quot;idolScoreConnectionFactory&quot; /&gt;</div><div class="line">        &lt;property name=&quot;defaultDestination&quot; ref=&quot;idolScoreDestination&quot; /&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">    &lt;bean id=&quot;bombIdolScoreMsgProducer&quot;</div><div class="line">          class=&quot;selflearning.mq.BombIdolScoreMsgProducer&quot;&gt;</div><div class="line">        &lt;property name=&quot;jmsTemplate&quot; ref=&quot;jmsTemplate&quot;/&gt;</div><div class="line">    &lt;/bean&gt;</div><div class="line"></div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>消息发送代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">public class BombIdolScoreMsgProducer &#123;</div><div class="line">    private static BombIdolScoreMsgProducer producer = null;</div><div class="line">    private JmsTemplate jmsTemplate;</div><div class="line"></div><div class="line">    private BombIdolScoreMsgProducer() &#123;&#125;</div><div class="line"></div><div class="line">    public static BombIdolScoreMsgProducer instance() &#123;</div><div class="line">        if (producer == null) &#123;</div><div class="line">            synchronized (BombIdolScoreMsgProducer.class) &#123;</div><div class="line">                if (producer == null) &#123;</div><div class="line">                    ApplicationContext context = new ClassPathXmlApplicationContext(</div><div class="line">                            new String[] &#123;&quot;classpath*:spring/idolscore-mq.xml&quot;&#125;);</div><div class="line">                    producer = context.getBean(BombIdolScoreMsgProducer.class);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return producer;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void send(final BombIdolScoreMessage message) &#123;</div><div class="line">        jmsTemplate.send(new MessageCreator() &#123;</div><div class="line">            @Override</div><div class="line">            public Message createMessage(Session session) throws JMSException &#123;</div><div class="line">                return session.createTextMessage(message.toString());</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setJmsTemplate(JmsTemplate jmsTemplate) &#123;</div><div class="line">        this.jmsTemplate = jmsTemplate;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>消息发送如果按照上面的方式，完全可以工作，但是效率不高，每次发送一条消息需要新建connection、session和producer，发完之后，还需要关闭，这个过程需要请求mq broker7次。</p>
+<blockquote>
+<p>JMS is designed for high performance. In particular its design is such that you are meant to create a number of objects up front on the startup of your application and then resuse them throughout your application. e.g. its a good idea to create upfront and then reuse the following</p>
+<ul>
+<li>Connection</li>
+<li>Session</li>
+<li>MessageProducer</li>
+<li>MessageConsumer<br>The reason is that each create &amp; destroy of the above objects typically requires an individual request &amp; response with the JMS broker to ensure it worked. e.g. creating a connection, session, producer, then sending a message, then closing everything down again - could result in 7 request-responses with the server!</li>
+</ul>
+</blockquote>
+<p>#</p>
+<h4 id="2-PooledConnectionFactory"><a href="#2-PooledConnectionFactory" class="headerlink" title="2.PooledConnectionFactory"></a>2.PooledConnectionFactory</h4><p>解决上面低效问题的方法就是池化连接，需要引入新的依赖，实测效果显示池化之后确实提高好几倍。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.apache.activemq&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;activemq-pool&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;5.14.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
+<p>spring配置修改，可以设置最大连接数，最大active session功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;!-- a pooling based ActiveMQ 连接工厂 --&gt;</div><div class="line">&lt;bean id=&quot;idolScoreConnectionFactory&quot; class=&quot;org.apache.activemq.pool.PooledConnectionFactory&quot; destroy-method=&quot;stop&quot;&gt;</div><div class="line">    &lt;property name=&quot;maxConnections&quot; value=&quot;3&quot;/&gt;</div><div class="line">    &lt;property name=&quot;maximumActiveSessionPerConnection&quot; value=&quot;10&quot;/&gt;</div><div class="line">    &lt;property name=&quot;connectionFactory&quot;&gt;</div><div class="line">        &lt;bean class=&quot;org.apache.activemq.ActiveMQConnectionFactory&quot;&gt;</div><div class="line">            &lt;property name=&quot;brokerURL&quot;&gt;</div><div class="line">                &lt;value&gt;$&#123;activemq.idolscore.server&#125;&lt;/value&gt;</div><div class="line">            &lt;/property&gt;</div><div class="line">            &lt;property name=&quot;userName&quot;&gt;</div><div class="line">                &lt;value&gt;$&#123;activemq.idolscore.user&#125;&lt;/value&gt;</div><div class="line">            &lt;/property&gt;</div><div class="line">            &lt;property name=&quot;password&quot;&gt;</div><div class="line">                &lt;value&gt;$&#123;activemq.idolscore.password&#125;&lt;/value&gt;</div><div class="line">            &lt;/property&gt;</div><div class="line">        &lt;/bean&gt;</div><div class="line">    &lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>遇到的问题1：Initialization of bean failed; nested exception is java.lang.reflect.MalformedParameterizedTypeException<br>这是因为pom里依赖了commons-pool和commons-pool2，将activemq-pool版本升到5.14就都依赖commons-pool2了，这样就米有问题了。</li>
+<li>遇到的问题2：failover的两个broker同时收到消息<br>解决方案很简单，将failover的url里randomize=false</li>
+</ul>
+<h3 id="消息接收：DefaultMessageListenerContainer"><a href="#消息接收：DefaultMessageListenerContainer" class="headerlink" title="消息接收：DefaultMessageListenerContainer"></a>消息接收：DefaultMessageListenerContainer</h3><ul>
+<li><p>spring配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 异步接收Queue消息Container --&gt;</div><div class="line">&lt;bean id=&quot;jmsTemplate&quot;</div><div class="line">      class=&quot;org.springframework.jms.listener.DefaultMessageListenerContainer&quot;&gt;</div><div class="line">    &lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot;/&gt;</div><div class="line">    &lt;property name=&quot;destination&quot; ref=&quot;destination&quot;/&gt;</div><div class="line">    &lt;property name=&quot;messageListener&quot; ref=&quot;entityUpdateMessageListener&quot;/&gt;</div><div class="line">    &lt;!-- 初始5个Consumer, 可动态扩展到10 --&gt;</div><div class="line">    &lt;property name=&quot;concurrentConsumers&quot; value=&quot;5&quot;/&gt;</div><div class="line">    &lt;property name=&quot;maxConcurrentConsumers&quot; value=&quot;10&quot;/&gt;</div><div class="line">    &lt;!-- 设置消息确认模式为Client --&gt;</div><div class="line">    &lt;property name=&quot;sessionAcknowledgeModeName&quot; value=&quot;AUTO_ACKNOWLEDGE&quot;/&gt;</div><div class="line">    &lt;property name=&quot;autoStartup&quot; value=&quot;true&quot;/&gt;</div><div class="line">&lt;/bean&gt;</div><div class="line">	</div><div class="line">&lt;bean id=&quot;entityUpdateMessageListener&quot;</div><div class="line">     class=&quot;selflearning.controller.PopCircleMessageListener&quot;/&gt;</div><div class="line"></div><div class="line">&lt;bean id=&quot;destination&quot; class=&quot;org.apache.activemq.command.ActiveMQQueue&quot;&gt;</div><div class="line">    &lt;constructor-arg index=&quot;0&quot;&gt;</div><div class="line">        &lt;value&gt;$&#123;paopao.activemq.circle.queuename&#125;&lt;/value&gt;</div><div class="line">    &lt;/constructor-arg&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>消息处理的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class PopCircleMessageListener implements MessageListener &#123;</div><div class="line"></div><div class="line">    public void onMessage(Message message) &#123;</div><div class="line">        if (message instanceof TextMessage) &#123;</div><div class="line">            TextMessage textMessage = (TextMessage) message;</div><div class="line">            try &#123;</div><div class="line">                String msgJson = textMessage.getText();</div><div class="line">                System.out.println(&quot;----&gt; Raw msg: &quot; + msgJson);</div><div class="line">            &#125; catch (JMSException e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h3><ol>
+<li><a href="http://elim.iteye.com/blog/1893038" target="_blank" rel="external">http://elim.iteye.com/blog/1893038</a></li>
+<li><a href="http://activemq.apache.org/spring-support.html" target="_blank" rel="external">http://activemq.apache.org/spring-support.html</a></li>
+<li><a href="https://codedependents.com/2009/10/16/efficient-lightweight-jms-with-spring-and-activemq/" target="_blank" rel="external">https://codedependents.com/2009/10/16/efficient-lightweight-jms-with-spring-and-activemq/</a></li>
+<li><a href="http://wiki.qiyi.domain/pages/viewpage.action?pageId=6817067#ActiveMQ开发者手册-FAQ" target="_blank" rel="external">http://wiki.qiyi.domain/pages/viewpage.action?pageId=6817067#ActiveMQ开发者手册-FAQ</a></li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/blog/categories/java/">java</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/blog/tags/spring/">spring</a><a href="/blog/tags/activemq/">activemq</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/blog/2017/06/25/Spring-JMS-基于activemq/#comments" class="ds-thread-count comments-count-link" data-thread-key="2017/06/25/Spring-JMS-基于activemq/" data-count-type="comments">&nbsp;</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/blog/2016/12/12/Sequence-File的优点/" title="Sequence File的优点" itemprop="url">Sequence File的优点</a>
   </h1>
   <p class="article-author">By
@@ -928,122 +1032,6 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/blog/2015/07/14/hexo-github-搭建blog/" title="hexo + github 搭建blog" itemprop="url">hexo + github 搭建blog</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/blog/about" title="Baojf" target="_blank" itemprop="author">Baojf</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-14T14:33:38.000Z" itemprop="datePublished"> 发表于 2015-07-14</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>网络上，随便搜一下hexo、github等关键词，就能出来一大堆相当详尽的博客搭建介绍，<br>我也是一步步跟着做下来，本文主要记录一些自己碰到的问题。</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
-<li>安装<a href="https://nodejs.org/" target="_blank" rel="external">Node.js</a>和git，这里不再赘述</li>
-<li><p>检查npm是不是在PATH下面</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">which</span> npm</div></pre></td></tr></table></figure>
-</li>
-<li><p>安装hexo</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli</div></pre></td></tr></table></figure>
-<p>转圈圈运行之后，报错</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">npm ERR! registry error parsing json</div><div class="line">npm ERR! Linux 2.6.32-358.el6.x86_64</div><div class="line">npm ERR! argv &quot;&lt;nodejs-dir&gt;/bin/node&quot; &quot;&lt;nodejs-dir&gt;/bin/npm&quot; &quot;install&quot; &quot;-g&quot; &quot;hexo-cli&quot;</div><div class="line">npm ERR! node v0.12.6</div><div class="line">npm ERR! npm  v2.11.2</div><div class="line">npm ERR! Unexpected end of input</div></pre></td></tr></table></figure>
-<p>可能是被墙了，加一个国内的源</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</div><div class="line">// or edit ~/.npmrc, put the following line into it</div><div class="line">// registry = https://registry.npm.taobao.org</div></pre></td></tr></table></figure>
-<p>现在就可以顺利安装了。</p>
-</li>
-</ol>
-<h3 id="创建blog"><a href="#创建blog" class="headerlink" title="创建blog"></a>创建blog</h3><ol>
-<li><p>在github上建一个名为blog的repo，然后clone到本地，在gh-pages分枝上建立<br>project page的方式来存放自己的blog</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> https://github.com/niaokedaoren/blog.git</div><div class="line">$ <span class="built_in">cd</span> blog</div><div class="line">$ git checkout --orphan gh-pages</div><div class="line">$ git rm -rf .</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"initial commit"</span></div><div class="line">$ git push origin gh-pages</div></pre></td></tr></table></figure>
-<p>报错：<br>error: src refspec github-pages does not match any.<br>error: failed to push some refs to ‘<a href="https://github.com/niaokedaoren/blog.git" target="_blank" rel="external">https://github.com/niaokedaoren/blog.git</a>‘<br>解决： push不能为空</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ touch README</div><div class="line">$ git add .</div><div class="line">$ git commit -m <span class="string">"add dummy README"</span></div><div class="line">$ git push origin gp-pages</div></pre></td></tr></table></figure>
-<p>上传一个rsa public key到github，可以实现无密钥登陆。</p>
-</li>
-<li><p>hexo建立blog</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo init blog</div><div class="line">$ <span class="built_in">cd</span> blog</div><div class="line">$ npm install</div></pre></td></tr></table></figure>
-<p>生成blog并启动hexo server，可以在 <a href="http://localhost:4000访问blog" target="_blank" rel="external">http://localhost:4000访问blog</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div><div class="line">$ hexo s</div></pre></td></tr></table></figure>
-</li>
-<li><p>配置_config.yml</p>
-<ul>
-<li>deploy<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: ssh://git@github.com/niaokedaoren/blog.git</div><div class="line">  branch: gh-pages</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>注意</strong>: 如果这里repo写成<a href="https://github.com/niaokedaoren/blog.git" target="_blank" rel="external">https://github.com/niaokedaoren/blog.git</a><br>就会报错：<a href="http://stackoverflow.com/questions/7438313/pushing-to-git-returning-error-code-403-fatal-http-request-failed" target="_blank" rel="external"><em>pushing-to-git-returning-error-code-403-fatal-http-request-failed</em></a></p>
-<ul>
-<li>url<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">url: http://niaokedaoren.github.io/blog</div><div class="line">root: /blog/</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>否则部署到github上会无法加载css</p>
-</li>
-<li><p>选择主题</p>
-<p>我选择的是<a href="http://wuchong.me/blog/2014/11/20/how-to-use-jacman/" target="_blank" rel="external">jacman</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> &lt;blog-dir&gt;</div><div class="line">$ git <span class="built_in">clone</span> https://github.com/wuchong/jacman.git themes/jacman</div></pre></td></tr></table></figure>
-<p>可以注册一个多说，在<strong>themes/jacman/_config.yml</strong>配置一下多说shortname。</p>
-</li>
-<li><p>常用的命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"post name"</span> <span class="comment">#写新的博客</span></div><div class="line">$ hexo new draft <span class="string">"draft name"</span> <span class="comment">#写博客草稿, scaffolds目录下可以编辑layout</span></div><div class="line">$ hexo clean <span class="comment">#清理生成的页面</span></div><div class="line">$ hexo g</div><div class="line">$ hexo s</div><div class="line">$ hexo d</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="写作工具"><a href="#写作工具" class="headerlink" title="写作工具"></a>写作工具</h3><p>我用的是sublime text2，具体配置参考<a href="http://www.jianshu.com/p/378338f10263" target="_blank" rel="external">http://www.jianshu.com/p/378338f10263</a></p>
-<p><em>参考</em></p>
-<ol>
-<li><a href="http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/" target="_blank" rel="external">http://cnfeat.com/2014/05/10/2014-05-11-how-to-build-a-blog/</a></li>
-<li><a href="http://www.aips.me/hexo-independent-blog-new-ways.html" target="_blank" rel="external">http://www.aips.me/hexo-independent-blog-new-ways.html</a></li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/blog/categories/tools/">tools</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/blog/tags/hexo/">hexo</a><a href="/blog/tags/github/">github</a><a href="/blog/tags/blog/">blog</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/blog/2015/07/14/hexo-github-搭建blog/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/07/14/hexo-github-搭建blog/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="extend next" rel="next" href="/blog/page/2/">Next<span></span></a>
@@ -1073,7 +1061,7 @@
 		  
 		
 		  
-			<li><a href="/blog/categories/java/" title="java">java<sup>6</sup></a></li>
+			<li><a href="/blog/categories/java/" title="java">java<sup>7</sup></a></li>
 		  
 		
 		  
@@ -1094,15 +1082,23 @@
 			
 		
 			
-				<li><a href="/blog/tags/sort/" title="sort">sort<sup>1</sup></a></li>
+				<li><a href="/blog/tags/Collections/" title="Collections">Collections<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/mapreduce/" title="mapreduce">mapreduce<sup>1</sup></a></li>
+				<li><a href="/blog/tags/spring/" title="spring">spring<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/sequencefile/" title="sequencefile">sequencefile<sup>1</sup></a></li>
+				<li><a href="/blog/tags/activemq/" title="activemq">activemq<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/base64/" title="base64">base64<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/blog/tags/protobuf/" title="protobuf">protobuf<sup>1</sup></a></li>
 			
 		
 			
@@ -1130,11 +1126,11 @@
 			
 		
 			
-				<li><a href="/blog/tags/Collections/" title="Collections">Collections<sup>1</sup></a></li>
+				<li><a href="/blog/tags/sequencefile/" title="sequencefile">sequencefile<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/blog/tags/protobuf/" title="protobuf">protobuf<sup>1</sup></a></li>
+				<li><a href="/blog/tags/sort/" title="sort">sort<sup>1</sup></a></li>
 			
 		
 			
@@ -1143,10 +1139,6 @@
 		
 			
 				<li><a href="/blog/tags/Comparator/" title="Comparator">Comparator<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/io/" title="io">io<sup>1</sup></a></li>
 			
 		
 			
@@ -1163,10 +1155,6 @@
 		
 			
 				<li><a href="/blog/tags/hexo/" title="hexo">hexo<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/blog/tags/github/" title="github">github<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -1226,7 +1214,7 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
 		
 		<a href="/blog/about" target="_blank" title="Baojf">Baojf</a>
 		
